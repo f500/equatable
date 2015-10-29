@@ -1,0 +1,25 @@
+{
+  "name": "f500/equatable",
+  "description": "Equatable objects and collections in PHP",
+  "keywords": [ "equatable", "equal", "equals" ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    { "name": "Jasper N. Brouwer", "email": "jasper@future500.nl" }
+  ],
+
+  "require": {
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "^5.0"
+  },
+
+  "autoload": {
+    "psr-4": { "F500\\Equatable\\": "src/" }
+  },
+
+  "autoload-dev": {
+    "psr-4": { "F500\\Equatable\\Tests\\": "tests/" }
+  }
+}
