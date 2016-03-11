@@ -12,10 +12,6 @@ matrix:
     - php: 7.0
     - php: hhvm
 
-before_install:
-  - composer selfupdate
-  - composer require --no-update doctrine/orm:${DOCTRINE_VERSION}
-
 install:
   - composer install --dev --no-interaction --no-progress --prefer-dist
 
