@@ -29,12 +29,8 @@ class ImmutableEquatableVector implements EquatableVector
                 throw InvalidArgumentException::invalidTypeInArray('items', Equatable::class, $item);
             }
 
-            $this->guardItem($item);
-
             $this->items[] = $item;
         }
-
-        $this->guardCollection($this->items);
     }
 
     public function __clone()
@@ -212,23 +208,5 @@ class ImmutableEquatableVector implements EquatableVector
         }
 
         return $count;
-    }
-
-    /**
-     * @param Equatable $item
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function guardItem(Equatable $item)
-    {
-    }
-
-    /**
-     * @param Equatable[] $items
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function guardCollection(array $items)
-    {
     }
 }
