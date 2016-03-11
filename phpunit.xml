@@ -5,7 +5,7 @@
     beStrictAboutTestsThatDoNotTestAnything="true"
     beStrictAboutOutputDuringTests="true"
     colors="true"
-    >
+>
     <testsuites>
         <testsuite name="core">
             <directory suffix="Test.php">./tests</directory>
@@ -15,10 +15,13 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/PHPUnit/TestCase.php</file>
+            </exclude>
         </whitelist>
     </filter>
 
     <logging>
-        <log type="coverage-clover" target="build/logs/clover.xml" />
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
 </phpunit>
