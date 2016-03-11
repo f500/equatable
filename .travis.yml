@@ -12,15 +12,14 @@ matrix:
     - php: hhvm
 
 install:
-  - composer install --dev --no-interaction --no-progress --prefer-dist
+  - composer install --no-interaction --no-progress --prefer-dist
 
 script:
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpunit --coverage-text
   - vendor/bin/phpcs --report=full --standard=PSR2 --encoding=utf-8 src
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - tests/upload-coverage.sh
 
 notifications:
   email: jasper@nerdsweide.nl
