@@ -280,6 +280,57 @@ final class ImmutableEquatableMapTest extends TestCase
     /**
      * @test
      */
+    public function it_searches_for_all_occurrences_of_an_item()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new ImmutableEquatableMap(
+            ['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]
+        );
+
+        $this->assertSame(['foo1', 'foo2'], $map->searchAll($itemFoo3));
+    }
+
+    /**
+     * @test
+     */
+    public function it_searches_for_all_occurrences_of_an_item_with_integer_keys()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new ImmutableEquatableMap(
+            [2 => $itemFoo1, 4 => $itemBar, 8 => $itemFoo2, 16 => $itemBaz]
+        );
+
+        $this->assertSame([2, 8], $map->searchAll($itemFoo3));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_find_any_items_it_does_not_contain()
+    {
+        $item = new EquatableObject('foo');
+
+        $map = new ImmutableEquatableMap([]);
+
+        $map->searchAll($item);
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_whether_it_contains_an_item_or_not()
     {
         $itemFoo = new EquatableObject('foo');

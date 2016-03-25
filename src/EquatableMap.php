@@ -55,6 +55,13 @@ interface EquatableMap extends Equatable, Countable, IteratorAggregate
     /**
      * @param Equatable $value
      *
+     * @return int[]|string[]
+     */
+    public function searchAll(Equatable $value);
+
+    /**
+     * @param Equatable $value
+     *
      * @return bool
      */
     public function contains(Equatable $value);

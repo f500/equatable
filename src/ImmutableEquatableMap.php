@@ -118,6 +118,26 @@ class ImmutableEquatableMap implements EquatableMap
     /**
      * @inheritdoc
      */
+    public function searchAll(Equatable $value)
+    {
+        $foundKeys = [];
+
+        foreach ($this->items as $index => $item) {
+            if ($item->equals($value)) {
+                $foundKeys[] = $index;
+            }
+        }
+
+        if (!$foundKeys) {
+            throw OutOfRangeException::valueOutOfRange($value);
+        }
+
+        return $foundKeys;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function contains(Equatable $value)
     {
         try {
