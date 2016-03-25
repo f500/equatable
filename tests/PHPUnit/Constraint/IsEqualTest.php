@@ -99,7 +99,7 @@ final class IsEqualTest extends TestCase
     /**
      * @test
      */
-    public function it_falls_back_to_parant_when_not_equatable()
+    public function it_falls_back_to_parent_when_not_equatable()
     {
         $value = new \stdClass();
         $other = new \stdClass();
