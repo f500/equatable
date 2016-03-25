@@ -7,12 +7,13 @@
 namespace F500\Equatable\PHPUnit;
 
 use F500\Equatable\PHPUnit\Constraint\IsEqual;
+use PHPUnit_Framework_Assert;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
  * @author    Jasper N. Brouwer <jasper@future500.nl>
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+trait EquatableAssertionCapabilities
 {
     /**
      * @inheritdoc
@@ -28,7 +29,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     ) {
         $constraint = self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
 
-        self::assertThat($actual, $constraint, $message);
+        PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -47,7 +48,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase)
         );
 
-        self::assertThat($actual, $constraint, $message);
+        PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -75,7 +76,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         $canonicalize = false,
         $ignoreCase = false
     ) {
-        return self::attribute(
+        return PHPUnit_Framework_Assert::attribute(
             self::equalTo($value, $delta, $maxDepth, $canonicalize, $ignoreCase),
             $attributeName
         );
