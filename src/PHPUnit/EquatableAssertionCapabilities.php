@@ -6,6 +6,7 @@
 
 namespace F500\Equatable\PHPUnit;
 
+use F500\Equatable\PHPUnit\Constraint\EquatableCollectionContains;
 use F500\Equatable\PHPUnit\Constraint\IsEqual;
 
 /**
@@ -63,6 +64,72 @@ trait EquatableAssertionCapabilities
     }
 
     /**
+     * @param mixed  $needle
+     * @param mixed  $haystack
+     * @param string $message
+     * @param bool   $ignoreCase
+     * @param bool   $checkForObjectIdentity
+     * @param bool   $checkForNonObjectIdentity
+     */
+    public static function assertContains(
+        $needle,
+        $haystack,
+        $message = '',
+        $ignoreCase = false,
+        $checkForObjectIdentity = true,
+        $checkForNonObjectIdentity = false
+    ) {
+        if (is_array($haystack) || is_object($haystack) && $haystack instanceof \Traversable) {
+            $constraint = self::contains($needle, $checkForObjectIdentity, $checkForNonObjectIdentity);
+        } elseif (is_string($haystack)) {
+            if (!is_string($needle)) {
+                throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            }
+
+            $constraint = new \PHPUnit_Framework_Constraint_StringContains($needle, $ignoreCase);
+        } else {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array, traversable or string');
+        }
+
+        \PHPUnit_Framework_Assert::assertThat($haystack, $constraint, $message);
+    }
+
+    /**
+     * @param mixed  $needle
+     * @param mixed  $haystack
+     * @param string $message
+     * @param bool   $ignoreCase
+     * @param bool   $checkForObjectIdentity
+     * @param bool   $checkForNonObjectIdentity
+     */
+    public static function assertNotContains(
+        $needle,
+        $haystack,
+        $message = '',
+        $ignoreCase = false,
+        $checkForObjectIdentity = true,
+        $checkForNonObjectIdentity = false
+    ) {
+        if (is_array($haystack) || is_object($haystack) && $haystack instanceof \Traversable) {
+            $constraint = new \PHPUnit_Framework_Constraint_Not(
+                self::contains($needle, $checkForObjectIdentity, $checkForNonObjectIdentity)
+            );
+        } elseif (is_string($haystack)) {
+            if (!is_string($needle)) {
+                throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            }
+
+            $constraint = new \PHPUnit_Framework_Constraint_Not(
+                new \PHPUnit_Framework_Constraint_StringContains($needle, $ignoreCase)
+            );
+        } else {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array, traversable or string');
+        }
+
+        \PHPUnit_Framework_Assert::assertThat($haystack, $constraint, $message);
+    }
+
+    /**
      * @param mixed $value
      * @param float $delta
      * @param int   $maxDepth
@@ -104,5 +171,17 @@ trait EquatableAssertionCapabilities
             self::equalTo($value, $delta, $maxDepth, $canonicalize, $ignoreCase),
             $attributeName
         );
+    }
+
+    /**
+     * @param mixed $value
+     * @param bool  $checkForObjectIdentity
+     * @param bool  $checkForNonObjectIdentity
+     *
+     * @return EquatableCollectionContains
+     */
+    public static function contains($value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+    {
+        return new EquatableCollectionContains($value, $checkForObjectIdentity, $checkForNonObjectIdentity);
     }
 }
