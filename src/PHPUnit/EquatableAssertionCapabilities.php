@@ -7,7 +7,6 @@
 namespace F500\Equatable\PHPUnit;
 
 use F500\Equatable\PHPUnit\Constraint\IsEqual;
-use PHPUnit_Framework_Assert;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -16,7 +15,13 @@ use PHPUnit_Framework_Assert;
 trait EquatableAssertionCapabilities
 {
     /**
-     * @inheritdoc
+     * @param mixed  $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param float  $delta
+     * @param int    $maxDepth
+     * @param bool   $canonicalize
+     * @param bool   $ignoreCase
      */
     public static function assertEquals(
         $expected,
@@ -29,11 +34,17 @@ trait EquatableAssertionCapabilities
     ) {
         $constraint = self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
 
-        PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
+        \PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
-     * @inheritdoc
+     * @param mixed  $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param float  $delta
+     * @param int    $maxDepth
+     * @param bool   $canonicalize
+     * @param bool   $ignoreCase
      */
     public static function assertNotEquals(
         $expected,
@@ -48,11 +59,17 @@ trait EquatableAssertionCapabilities
             self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase)
         );
 
-        PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
+        \PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param float $delta
+     * @param int   $maxDepth
+     * @param bool  $canonicalize
+     * @param bool  $ignoreCase
+     *
+     * @return IsEqual
      */
     public static function equalTo($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
@@ -66,7 +83,14 @@ trait EquatableAssertionCapabilities
     }
 
     /**
-     * @inheritdoc
+     * @param string $attributeName
+     * @param mixed  $value
+     * @param float  $delta
+     * @param int    $maxDepth
+     * @param bool   $canonicalize
+     * @param bool   $ignoreCase
+     *
+     * @return \PHPUnit_Framework_Constraint_Attribute
      */
     public static function attributeEqualTo(
         $attributeName,
@@ -76,7 +100,7 @@ trait EquatableAssertionCapabilities
         $canonicalize = false,
         $ignoreCase = false
     ) {
-        return PHPUnit_Framework_Assert::attribute(
+        return \PHPUnit_Framework_Assert::attribute(
             self::equalTo($value, $delta, $maxDepth, $canonicalize, $ignoreCase),
             $attributeName
         );
