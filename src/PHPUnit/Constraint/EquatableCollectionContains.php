@@ -6,6 +6,7 @@
 
 namespace F500\Equatable\PHPUnit\Constraint;
 
+use F500\Equatable\Equatable;
 use F500\Equatable\EquatableMap;
 use F500\Equatable\EquatableVector;
 
@@ -22,6 +23,10 @@ final class EquatableCollectionContains extends \PHPUnit_Framework_Constraint_Tr
     {
         if ($other instanceof EquatableMap || $other instanceof EquatableVector) {
             return $other->contains($this->value);
+        }
+
+        if ($this->value instanceof Equatable) {
+            return $this->collectionContainsAnEqualEquatableObject($other);
         }
 
         return parent::matches($other);
@@ -41,5 +46,21 @@ final class EquatableCollectionContains extends \PHPUnit_Framework_Constraint_Tr
         }
 
         return parent::failureDescription($other);
+    }
+
+    /**
+     * @param \Traversable|array $other
+     *
+     * @return bool
+     */
+    private function collectionContainsAnEqualEquatableObject($other)
+    {
+        foreach ($other as $element) {
+            if ($this->value->equals($element)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

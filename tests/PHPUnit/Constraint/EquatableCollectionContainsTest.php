@@ -62,7 +62,7 @@ final class EquatableCollectionContainsTest extends TestCase
     /**
      * @test
      * @expectedException \PHPUnit_Framework_ExpectationFailedException
-     * @@expectedExceptionMessage Failed asserting that an equatable vector contains
+     * @expectedExceptionMessage Failed asserting that an equatable vector contains
      */
     public function it_fails_to_evaluate_when_an_equatable_vector_does_not_contain_the_value()
     {
@@ -89,13 +89,54 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
-     * @@expectedExceptionMessage Failed asserting that an array contains
      */
-    public function it_falls_back_to_parent_when_not_an_equatable_collection()
+    public function it_passes_evaluation_when_a_collection_contains_an_equatable_object()
+    {
+        $value = new EquatableObject('foo');
+        $array = [new EquatableObject('foo')];
+
+        $constraint = new EquatableCollectionContains($value);
+
+        $this->assertNull($constraint->evaluate($array));
+    }
+
+    /**
+     * @test
+     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedExceptionMessage Failed asserting that an array contains
+     */
+    public function it_fails_to_evaluate_when_a_collection_does_not_contain_an_equatable_object()
     {
         $value = new EquatableObject('foo');
         $array = [new EquatableObject('bar')];
+
+        $constraint = new EquatableCollectionContains($value);
+
+        $constraint->evaluate($array);
+    }
+
+    /**
+     * @test
+     */
+    public function it_passes_evaluation_when_a_collection_contains_a_non_equatable_object()
+    {
+        $value = 'foo';
+        $array = ['foo'];
+
+        $constraint = new EquatableCollectionContains($value);
+
+        $this->assertNull($constraint->evaluate($array));
+    }
+
+    /**
+     * @test
+     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedExceptionMessage Failed asserting that an array contains
+     */
+    public function it_fails_to_evaluate_when_a_collection_does_not_contain_a_non_equatable_object()
+    {
+        $value = 'foo';
+        $array = ['bar'];
 
         $constraint = new EquatableCollectionContains($value);
 
