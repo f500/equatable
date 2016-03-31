@@ -89,6 +89,8 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
+     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @@expectedExceptionMessage Failed asserting that an array contains
      */
     public function it_falls_back_to_parent_when_not_an_equatable_collection()
     {
@@ -97,6 +99,6 @@ final class EquatableCollectionContainsTest extends TestCase
 
         $constraint = new EquatableCollectionContains($value);
 
-        $this->assertFalse($constraint->evaluate($array, '', true));
+        $constraint->evaluate($array);
     }
 }

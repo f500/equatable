@@ -32,10 +32,14 @@ final class EquatableCollectionContains extends \PHPUnit_Framework_Constraint_Tr
      */
     protected function failureDescription($other)
     {
-        return sprintf(
-            '%s %s',
-            $other instanceof EquatableMap ? 'an equatable map' : 'an equatable vector',
-            $this->toString()
-        );
+        if ($other instanceof EquatableMap) {
+            return 'an equatable map ' . $this->toString();
+        }
+
+        if ($other instanceof EquatableVector) {
+            return 'an equatable vector ' . $this->toString();
+        }
+
+        return parent::failureDescription($other);
     }
 }
