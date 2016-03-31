@@ -60,6 +60,20 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
+     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     */
+    public function it_fails_to_evaluate_when_an_equatable_vector_does_not_contain_the_value()
+    {
+        $value  = new EquatableObject('foo');
+        $vector = new ImmutableEquatableVector(['bar' => new EquatableObject('bar')]);
+
+        $constraint = new EquatableCollectionContains($value);
+
+        $this->assertFalse($constraint->evaluate($vector));
+    }
+
+    /**
+     * @test
      */
     public function it_evaluates_to_false_when_an_equatable_vector_does_not_contain_the_value()
     {
