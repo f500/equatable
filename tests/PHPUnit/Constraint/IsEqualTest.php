@@ -32,6 +32,7 @@ final class IsEqualTest extends TestCase
     /**
      * @test
      * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedExceptionMessage Failed asserting that two equatable objects are equal
      */
     public function it_fails_to_evaluate_when_only_value_is_equatable()
     {
@@ -59,6 +60,7 @@ final class IsEqualTest extends TestCase
     /**
      * @test
      * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedExceptionMessage Failed asserting that two equatable objects are equal
      */
     public function it_fails_to_evaluate_when_only_other_is_equatable()
     {

@@ -47,6 +47,7 @@ final class EquatableCollectionContainsTest extends TestCase
     /**
      * @test
      * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedExceptionMessage Failed asserting that an equatable map contains
      */
     public function it_fails_to_evaluate_when_an_equatable_map_does_not_contain_the_value()
     {
@@ -61,6 +62,7 @@ final class EquatableCollectionContainsTest extends TestCase
     /**
      * @test
      * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @@expectedExceptionMessage Failed asserting that an equatable vector contains
      */
     public function it_fails_to_evaluate_when_an_equatable_vector_does_not_contain_the_value()
     {
