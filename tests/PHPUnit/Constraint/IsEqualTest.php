@@ -41,7 +41,7 @@ final class IsEqualTest extends TestCase
 
         $constraint = new IsEqual($value);
 
-        $this->assertFalse($constraint->evaluate($other));
+        $constraint->evaluate($other);
     }
 
     /**
@@ -69,7 +69,7 @@ final class IsEqualTest extends TestCase
 
         $constraint = new IsEqual($value);
 
-        $this->assertFalse($constraint->evaluate($other));
+        $constraint->evaluate($other);
     }
 
     /**

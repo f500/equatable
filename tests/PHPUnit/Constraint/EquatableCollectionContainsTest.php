@@ -56,7 +56,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
         $constraint = new EquatableCollectionContains($value);
 
-        $this->assertFalse($constraint->evaluate($map));
+        $constraint->evaluate($map);
     }
 
     /**
@@ -71,7 +71,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
         $constraint = new EquatableCollectionContains($value);
 
-        $this->assertFalse($constraint->evaluate($vector));
+        $constraint->evaluate($vector);
     }
 
     /**
