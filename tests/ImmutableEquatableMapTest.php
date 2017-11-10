@@ -614,4 +614,31 @@ final class ImmutableEquatableMapTest extends TestCase
         $this->assertCount(1, $diff);
         $this->assertSame($itemQux, $diff->get('qux'));
     }
+
+    /**
+     * @test
+     */
+    public function it_exposes_all_keys_in_this_map_that_are_not_present_in_the_other_map()
+    {
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBaz1 = new EquatableObject('baz');
+
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz2 = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
+
+        $map   = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $other = new EquatableMap(['bar' => $itemBar2, 'baz' => $itemBaz2, 'qux' => $itemQux]);
+
+        $diff = $map->diffKeys($other);
+
+        $this->assertCount(1, $diff);
+        $this->assertSame('foo', $diff[0]);
+
+        $diff = $other->diffKeys($map);
+
+        $this->assertCount(1, $diff);
+        $this->assertSame('qux', $diff[0]);
+    }
 }
