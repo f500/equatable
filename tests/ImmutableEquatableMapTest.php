@@ -562,6 +562,35 @@ final class ImmutableEquatableMapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_all_keys_in_this_map_that_are_also_present_in_the_other_map()
+    {
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBaz1 = new EquatableObject('baz');
+
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz2 = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
+
+        $map   = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $other = new EquatableMap(['bar' => $itemBar2, 'baz' => $itemBaz2, 'qux' => $itemQux]);
+
+        $intersect = $map->intersectKeys($other);
+
+        $this->assertCount(2, $intersect);
+        $this->assertSame('bar', $intersect[0]);
+        $this->assertSame('baz', $intersect[1]);
+
+        $intersect = $other->intersectKeys($map);
+
+        $this->assertCount(2, $intersect);
+        $this->assertSame('bar', $intersect[0]);
+        $this->assertSame('baz', $intersect[1]);
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_all_items_in_this_map_that_are_not_present_in_the_other_map()
     {
         $itemFoo  = new EquatableObject('foo');
