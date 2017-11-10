@@ -689,4 +689,29 @@ final class EquatableMapTest extends TestCase
         $this->assertSame($itemBar, $filtered->get('bar'));
         $this->assertSame($itemBaz, $filtered->get('baz'));
     }
+
+    /**
+     * @test
+     */
+    public function it_maps_items()
+    {
+        $itemFoo = new EquatableObjectWithToString('foo');
+        $itemBar = new EquatableObjectWithToString('bar');
+        $itemBaz = new EquatableObjectWithToString('baz');
+
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $mapped = $map->map(
+            function (EquatableObjectWithToString $item): EquatableObjectWithToString {
+                return new EquatableObjectWithToString(
+                    str_rot13($item->toString())
+                );
+            }
+        );
+
+        $this->assertCount(3, $mapped);
+        $this->assertSame('sbb', $mapped->get('foo')->toString());
+        $this->assertSame('one', $mapped->get('bar')->toString());
+        $this->assertSame('onm', $mapped->get('baz')->toString());
+    }
 }

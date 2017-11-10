@@ -685,4 +685,29 @@ final class EquatableVectorTest extends TestCase
         $this->assertSame($itemBar, $filtered->get(0));
         $this->assertSame($itemBaz, $filtered->get(1));
     }
+
+    /**
+     * @test
+     */
+    public function it_maps_items()
+    {
+        $itemFoo = new EquatableObjectWithToString('foo');
+        $itemBar = new EquatableObjectWithToString('bar');
+        $itemBaz = new EquatableObjectWithToString('baz');
+
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz]);
+
+        $mapped = $vector->map(
+            function (EquatableObjectWithToString $item): EquatableObjectWithToString {
+                return new EquatableObjectWithToString(
+                    str_rot13($item->toString())
+                );
+            }
+        );
+
+        $this->assertCount(3, $mapped);
+        $this->assertSame('sbb', $mapped->get(0)->toString());
+        $this->assertSame('one', $mapped->get(1)->toString());
+        $this->assertSame('onm', $mapped->get(2)->toString());
+    }
 }

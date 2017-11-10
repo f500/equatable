@@ -241,6 +241,21 @@ final class EquatableMap implements Equatable, Countable, IteratorAggregate
         );
     }
 
+    /**
+     * The mapper callable is given an equatable item, and should return
+     * a new value to use in it's place.
+     *
+     * function (Equatable $item) {
+     *     return $item;
+     * }
+     */
+    public function map(callable $mapper): self
+    {
+        return new self(
+            array_map($mapper, $this->items)
+        );
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
