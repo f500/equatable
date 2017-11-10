@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use OutOfRangeException as BaseException;
@@ -14,13 +16,8 @@ use OutOfRangeException as BaseException;
  */
 final class InRangeException extends BaseException
 {
-    /**
-     * @param int|string $key
-     *
-     * @return InRangeException
-     */
-    public static function keyInRange($key)
+    public static function keyInRange(string $key): self
     {
-        return new self(sprintf('Collection already contains the key %s', $key));
+        return new self(sprintf('Collection already contains the key "%s"', $key));
     }
 }

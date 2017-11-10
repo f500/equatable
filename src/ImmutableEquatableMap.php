@@ -4,9 +4,12 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use ArrayIterator;
+use Traversable;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -44,10 +47,7 @@ class ImmutableEquatableMap implements EquatableMap
         $this->items = $items;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function add($key, Equatable $value)
+    public function add(string $key, Equatable $value): EquatableMap
     {
         if ($this->containsKey($key)) {
             throw InRangeException::keyInRange($key);
@@ -60,10 +60,7 @@ class ImmutableEquatableMap implements EquatableMap
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function remove(Equatable $value)
+    public function remove(Equatable $value): EquatableMap
     {
         $key   = $this->search($value);
         $items = $this->items;
@@ -73,10 +70,7 @@ class ImmutableEquatableMap implements EquatableMap
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function replace($key, Equatable $value)
+    public function replace(string $key, Equatable $value): EquatableMap
     {
         if (!$this->containsKey($key)) {
             throw OutOfRangeException::keyOutOfRange($key);
@@ -89,10 +83,7 @@ class ImmutableEquatableMap implements EquatableMap
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function get($key)
+    public function get(string $key): Equatable
     {
         if (!$this->containsKey($key)) {
             throw OutOfRangeException::keyOutOfRange($key);
@@ -101,10 +92,7 @@ class ImmutableEquatableMap implements EquatableMap
         return $this->items[$key];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function search(Equatable $value)
+    public function search(Equatable $value): string
     {
         foreach ($this->items as $key => $item) {
             if ($item->equals($value)) {
@@ -115,10 +103,7 @@ class ImmutableEquatableMap implements EquatableMap
         throw OutOfRangeException::valueOutOfRange($value);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function searchAll(Equatable $value)
+    public function searchAll(Equatable $value): array
     {
         $foundKeys = [];
 
@@ -135,10 +120,7 @@ class ImmutableEquatableMap implements EquatableMap
         return $foundKeys;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function contains(Equatable $value)
+    public function contains(Equatable $value): bool
     {
         try {
             $this->search($value);
@@ -148,22 +130,12 @@ class ImmutableEquatableMap implements EquatableMap
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function containsKey($key)
+    public function containsKey(string $key): bool
     {
-        if (!is_string($key) && !is_int($key)) {
-            throw InvalidArgumentException::invalidType('key', 'integer or string', $key);
-        }
-
         return isset($this->items[$key]);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function equals($other)
+    public function equals($other): bool
     {
         if (!$other instanceof static) {
             return false;
@@ -182,26 +154,12 @@ class ImmutableEquatableMap implements EquatableMap
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->items);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function countItem(Equatable $value)
+    public function countItem(Equatable $value): int
     {
         $count = 0;
 
@@ -212,5 +170,10 @@ class ImmutableEquatableMap implements EquatableMap
         }
 
         return $count;
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->items);
     }
 }

@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 /**
@@ -12,10 +14,5 @@ namespace F500\Equatable;
  */
 interface Equatable
 {
-    /**
-     * @param mixed $other
-     *
-     * @return bool
-     */
-    public function equals($other);
+    public function equals($other): bool;
 }

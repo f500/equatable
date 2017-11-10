@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\PHPUnit;
 
 use F500\Equatable\PHPUnit\Constraint\EquatableCollectionContains;

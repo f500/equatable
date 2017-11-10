@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use Countable;
@@ -15,67 +17,21 @@ use IteratorAggregate;
  */
 interface EquatableVector extends Equatable, Countable, IteratorAggregate
 {
-    /**
-     * @param Equatable $value
-     *
-     * @return static
-     */
-    public function add(Equatable $value);
+    public function add(Equatable $value): self;
 
-    /**
-     * @param Equatable $value
-     *
-     * @return static
-     */
-    public function remove(Equatable $value);
+    public function remove(Equatable $value): self;
 
-    /**
-     * @param int       $key
-     * @param Equatable $value
-     *
-     * @return static
-     */
-    public function replace($key, Equatable $value);
+    public function replace(int $index, Equatable $value): self;
 
-    /**
-     * @param int $key
-     *
-     * @return Equatable
-     */
-    public function get($key);
+    public function get(int $index): Equatable;
 
-    /**
-     * @param Equatable $value
-     *
-     * @return int
-     */
-    public function search(Equatable $value);
+    public function search(Equatable $value): int;
 
-    /**
-     * @param Equatable $value
-     *
-     * @return int[]
-     */
-    public function searchAll(Equatable $value);
+    public function searchAll(Equatable $value): array;
 
-    /**
-     * @param Equatable $value
-     *
-     * @return bool
-     */
-    public function contains(Equatable $value);
+    public function contains(Equatable $value): bool;
 
-    /**
-     * @param int $key
-     *
-     * @return bool
-     */
-    public function containsKey($key);
+    public function containsIndex(int $index): bool;
 
-    /**
-     * @param Equatable $value
-     *
-     * @return int
-     */
-    public function countItem(Equatable $value);
+    public function countItem(Equatable $value): int;
 }

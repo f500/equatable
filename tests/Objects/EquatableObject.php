@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests\Objects;
 
 use F500\Equatable\Equatable;
@@ -36,10 +38,7 @@ class EquatableObject implements Equatable
         $this->hash  = spl_object_hash($this);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function equals($other)
+    public function equals($other): bool
     {
         return ($other instanceof static && $other->value === $this->value);
     }

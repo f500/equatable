@@ -4,9 +4,12 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use ArrayIterator;
+use Traversable;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -44,10 +47,7 @@ class ImmutableEquatableVector implements EquatableVector
         $this->items = $items;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function add(Equatable $value)
+    public function add(Equatable $value): EquatableVector
     {
         $items = $this->items;
 
@@ -56,51 +56,39 @@ class ImmutableEquatableVector implements EquatableVector
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function remove(Equatable $value)
+    public function remove(Equatable $value): EquatableVector
     {
-        $key   = $this->search($value);
+        $index = $this->search($value);
         $items = $this->items;
 
-        unset($items[$key]);
+        unset($items[$index]);
 
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function replace($key, Equatable $value)
+    public function replace(int $index, Equatable $value): EquatableVector
     {
-        if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
+        if (!$this->containsIndex($index)) {
+            throw OutOfRangeException::indexOutOfRange($index);
         }
 
         $items = $this->items;
 
-        $items[$key] = $value;
+        $items[$index] = $value;
 
         return new static($items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function get($key)
+    public function get(int $index): Equatable
     {
-        if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
+        if (!$this->containsIndex($index)) {
+            throw OutOfRangeException::indexOutOfRange($index);
         }
 
-        return $this->items[$key];
+        return $this->items[$index];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function search(Equatable $value)
+    public function search(Equatable $value): int
     {
         foreach ($this->items as $index => $item) {
             if ($item->equals($value)) {
@@ -111,30 +99,24 @@ class ImmutableEquatableVector implements EquatableVector
         throw OutOfRangeException::valueOutOfRange($value);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function searchAll(Equatable $value)
+    public function searchAll(Equatable $value): array
     {
-        $foundKeys = [];
+        $foundIndexes = [];
 
         foreach ($this->items as $index => $item) {
             if ($item->equals($value)) {
-                $foundKeys[] = $index;
+                $foundIndexes[] = $index;
             }
         }
 
-        if (!$foundKeys) {
+        if (!$foundIndexes) {
             throw OutOfRangeException::valueOutOfRange($value);
         }
 
-        return $foundKeys;
+        return $foundIndexes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function contains(Equatable $value)
+    public function contains(Equatable $value): bool
     {
         try {
             $this->search($value);
@@ -144,22 +126,12 @@ class ImmutableEquatableVector implements EquatableVector
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function containsKey($key)
+    public function containsIndex(int $index): bool
     {
-        if (!is_int($key)) {
-            throw InvalidArgumentException::invalidType('key', 'integer', $key);
-        }
-
-        return isset($this->items[$key]);
+        return isset($this->items[$index]);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function equals($other)
+    public function equals($other): bool
     {
         if (!$other instanceof static) {
             return false;
@@ -178,26 +150,12 @@ class ImmutableEquatableVector implements EquatableVector
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->items);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function countItem(Equatable $value)
+    public function countItem(Equatable $value): int
     {
         $count = 0;
 
@@ -208,5 +166,10 @@ class ImmutableEquatableVector implements EquatableVector
         }
 
         return $count;
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->items);
     }
 }

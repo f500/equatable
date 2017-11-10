@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use OutOfRangeException as BaseException;
@@ -14,22 +16,17 @@ use OutOfRangeException as BaseException;
  */
 final class OutOfRangeException extends BaseException
 {
-    /**
-     * @param int|string $key
-     *
-     * @return OutOfRangeException
-     */
-    public static function keyOutOfRange($key)
+    public static function indexOutOfRange(int $index): self
     {
-        return new self(sprintf('Collection does not contain the key %s', $key));
+        return new self(sprintf('Collection does not contain the index %d', $index));
     }
 
-    /**
-     * @param Equatable $value
-     *
-     * @return OutOfRangeException
-     */
-    public static function valueOutOfRange(Equatable $value)
+    public static function keyOutOfRange(string $key): self
+    {
+        return new self(sprintf('Collection does not contain the key "%s"', $key));
+    }
+
+    public static function valueOutOfRange(Equatable $value): self
     {
         if (method_exists($value, 'toString')) {
             $representation = $value->toString();

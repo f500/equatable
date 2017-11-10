@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests\Objects;
 
 /**
@@ -12,10 +14,7 @@ namespace F500\Equatable\Tests\Objects;
  */
 final class EquatableObjectWithMagicToString extends EquatableObject
 {
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value;
     }

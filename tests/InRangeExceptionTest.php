@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests;
 
 use F500\Equatable\InRangeException;
@@ -20,11 +22,11 @@ final class InRangeExceptionTest extends TestCase
      */
     public function it_creates_a_keyInRange_exception()
     {
-        $exception = InRangeException::keyInRange(0);
+        $exception = InRangeException::keyInRange('a');
 
         $this->assertInstanceOf(InRangeException::class, $exception);
         $this->assertSame(
-            'Collection already contains the key 0',
+            'Collection already contains the key "a"',
             $exception->getMessage()
         );
     }

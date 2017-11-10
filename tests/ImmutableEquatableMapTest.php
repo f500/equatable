@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests;
 
 use F500\Equatable\ImmutableEquatableMap;
@@ -27,20 +29,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz = new EquatableObject('baz');
 
         $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-
-        $this->assertInstanceOf(ImmutableEquatableMap::class, $map);
-    }
-
-    /**
-     * @test
-     */
-    public function it_is_created_with_equatable_items_with_integer_keys()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo, 4 => $itemBar, 8 => $itemBaz]);
 
         $this->assertInstanceOf(ImmutableEquatableMap::class, $map);
     }
@@ -80,31 +68,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $items     = [$itemFoo, $itemBar, $itemBaz];
 
         $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-
-        foreach ($map as $key => $value) {
-            $this->assertSame($keys[$iteration], $key);
-            $this->assertSame($items[$iteration], $value);
-
-            $iteration++;
-        }
-
-        $this->assertSame(3, $iteration);
-    }
-
-    /**
-     * @test
-     */
-    public function it_traverses_all_items_with_integer_keys_when_iterated_over()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $iteration = 0;
-        $keys      = [2, 4, 8];
-        $items     = [$itemFoo, $itemBar, $itemBaz];
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo, 4 => $itemBar, 8 => $itemBaz]);
 
         foreach ($map as $key => $value) {
             $this->assertSame($keys[$iteration], $key);
@@ -186,22 +149,6 @@ final class ImmutableEquatableMapTest extends TestCase
 
     /**
      * @test
-     */
-    public function it_exposes_its_items_with_integer_keys()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo, 4 => $itemBar, 8 => $itemBaz]);
-
-        $this->assertSame($itemFoo, $map->get(2));
-        $this->assertSame($itemBar, $map->get(4));
-        $this->assertSame($itemBaz, $map->get(8));
-    }
-
-    /**
-     * @test
      * @expectedException \F500\Equatable\OutOfRangeException
      */
     public function it_cannot_expose_an_item_when_the_key_does_not_exist()
@@ -209,17 +156,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $map = new ImmutableEquatableMap([]);
 
         $map->get('foo');
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_or_string_keys_when_exposing_items()
-    {
-        $map = new ImmutableEquatableMap([]);
-
-        $map->get(1.2);
     }
 
     /**
@@ -241,27 +177,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $this->assertSame('foo', $map->search($itemFoo2));
         $this->assertSame('bar', $map->search($itemBar2));
         $this->assertSame('baz', $map->search($itemBaz2));
-    }
-
-    /**
-     * @test
-     */
-    public function it_searches_for_an_item_with_integer_key()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz1 = new EquatableObject('baz');
-        $itemBaz2 = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo1, 4 => $itemBar1, 8 => $itemBaz1]);
-
-        $this->assertSame(2, $map->search($itemFoo2));
-        $this->assertSame(4, $map->search($itemBar2));
-        $this->assertSame(8, $map->search($itemBaz2));
     }
 
     /**
@@ -294,25 +209,6 @@ final class ImmutableEquatableMapTest extends TestCase
         );
 
         $this->assertSame(['foo1', 'foo2'], $map->searchAll($itemFoo3));
-    }
-
-    /**
-     * @test
-     */
-    public function it_searches_for_all_occurrences_of_an_item_with_integer_keys()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-        $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap(
-            [2 => $itemFoo1, 4 => $itemBar, 8 => $itemFoo2, 16 => $itemBaz]
-        );
-
-        $this->assertSame([2, 8], $map->searchAll($itemFoo3));
     }
 
     /**
@@ -353,30 +249,6 @@ final class ImmutableEquatableMapTest extends TestCase
 
         $this->assertTrue($map->containsKey('foo'));
         $this->assertFalse($map->containsKey('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_whether_it_contains_an_item_at_certain_integer_key_or_not()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo]);
-
-        $this->assertTrue($map->containsKey(2));
-        $this->assertFalse($map->containsKey(4));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_or_string_keys_when_exposing_whether_it_contains_items()
-    {
-        $map = new ImmutableEquatableMap([]);
-
-        $map->containsKey(1.2);
     }
 
     /**
@@ -534,27 +406,6 @@ final class ImmutableEquatableMapTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_a_new_map_with_an_item_with_integer_key_added()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo, 4 => $itemBar]);
-
-        $newMap = $map->add(8, $itemBaz);
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(3, $newMap);
-        $this->assertSame($itemFoo, $newMap->get(2));
-        $this->assertSame($itemBar, $newMap->get(4));
-        $this->assertSame($itemBaz, $newMap->get(8));
-    }
-
-    /**
-     * @test
-     */
     public function it_is_unchanged_after_adding_an_item()
     {
         $itemFoo = new EquatableObject('foo');
@@ -568,19 +419,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $this->assertCount(2, $map);
         $this->assertSame($itemFoo, $map->get('foo'));
         $this->assertSame($itemBar, $map->get('bar'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_or_string_keys_when_adding_items()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new ImmutableEquatableMap([]);
-
-        $map->add(1.2, $itemFoo);
     }
 
     /**
@@ -618,26 +456,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $this->assertCount(2, $newMap);
         $this->assertSame($itemFoo, $newMap->get('foo'));
         $this->assertSame($itemBar, $newMap->get('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_does_not_reorder_items_when_removing_one()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new ImmutableEquatableMap([2 => $itemFoo, 4 => $itemBar1, 8 => $itemBaz]);
-
-        $newMap = $map->remove($itemBar2);
-
-        $this->assertSame($itemFoo, $newMap->get(2));
-        $this->assertSame($itemBaz, $newMap->get(8));
     }
 
     /**
@@ -697,19 +515,6 @@ final class ImmutableEquatableMapTest extends TestCase
         $this->assertCount(2, $map);
         $this->assertSame($itemFoo, $map->get('foo'));
         $this->assertSame($itemBar, $map->get('bar'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_or_string_keys_when_replacing_items()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new ImmutableEquatableMap([]);
-
-        $map->replace(1.2, $itemFoo);
     }
 
     /**

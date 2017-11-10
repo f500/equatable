@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests;
 
 use F500\Equatable\OutOfRangeException;
@@ -21,13 +23,27 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_keyOutOfRange_exception()
+    public function it_creates_an_indexOutOfRange_exception()
     {
-        $exception = OutOfRangeException::keyOutOfRange(0);
+        $exception = OutOfRangeException::indexOutOfRange(0);
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertSame(
-            'Collection does not contain the key 0',
+            'Collection does not contain the index 0',
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_keyOutOfRange_exception()
+    {
+        $exception = OutOfRangeException::keyOutOfRange('a');
+
+        $this->assertInstanceOf(OutOfRangeException::class, $exception);
+        $this->assertSame(
+            'Collection does not contain the key "a"',
             $exception->getMessage()
         );
     }

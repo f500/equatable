@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable\Tests;
 
 use F500\Equatable\ImmutableEquatableVector;
@@ -181,17 +183,6 @@ final class ImmutableEquatableVectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_keys_when_exposing_items()
-    {
-        $vector = new ImmutableEquatableVector([]);
-
-        $vector->get('0');
-    }
-
-    /**
-     * @test
      */
     public function it_searches_for_an_item()
     {
@@ -294,19 +285,8 @@ final class ImmutableEquatableVectorTest extends TestCase
 
         $vector = new ImmutableEquatableVector([$itemFoo]);
 
-        $this->assertTrue($vector->containsKey(0));
-        $this->assertFalse($vector->containsKey(1));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_keys_when_exposing_whether_it_contains_items()
-    {
-        $vector = new ImmutableEquatableVector([]);
-
-        $vector->containsKey('0');
+        $this->assertTrue($vector->containsIndex(0));
+        $this->assertFalse($vector->containsIndex(1));
     }
 
     /**
@@ -610,21 +590,6 @@ final class ImmutableEquatableVectorTest extends TestCase
         $this->assertCount(2, $vector);
         $this->assertSame($itemFoo, $vector->get(0));
         $this->assertSame($itemBar, $vector->get(1));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
-     */
-    public function it_does_not_support_non_integer_keys_when_replacing_items()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar]);
-
-        $vector->replace('1', $itemBaz);
     }
 
     /**

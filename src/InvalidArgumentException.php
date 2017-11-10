@@ -4,6 +4,8 @@
  * @license https://github.com/f500/equatable/blob/master/LICENSE MIT
  */
 
+declare(strict_types=1);
+
 namespace F500\Equatable;
 
 use InvalidArgumentException as BaseException;
@@ -14,14 +16,7 @@ use InvalidArgumentException as BaseException;
  */
 final class InvalidArgumentException extends BaseException
 {
-    /**
-     * @param string $argument
-     * @param string $expectedType
-     * @param mixed  $actualValue
-     *
-     * @return InvalidArgumentException
-     */
-    public static function invalidType($argument, $expectedType, $actualValue)
+    public static function invalidType(string $argument, string $expectedType, $actualValue): self
     {
         return self::create(
             'Argument $%s must be of type %s, %s given',
@@ -31,14 +26,7 @@ final class InvalidArgumentException extends BaseException
         );
     }
 
-    /**
-     * @param string $argument
-     * @param string $expectedType
-     * @param mixed  $actualValue
-     *
-     * @return InvalidArgumentException
-     */
-    public static function invalidTypeInArray($argument, $expectedType, $actualValue)
+    public static function invalidTypeInArray(string $argument, string $expectedType, $actualValue): self
     {
         return self::create(
             'Each value in argument $%s must be of type %s, %s given',
@@ -48,15 +36,7 @@ final class InvalidArgumentException extends BaseException
         );
     }
 
-    /**
-     * @param string $message
-     * @param string $argument
-     * @param string $expectedType
-     * @param mixed  $actualValue
-     *
-     * @return InvalidArgumentException
-     */
-    private static function create($message, $argument, $expectedType, $actualValue)
+    private static function create(string $message, string $argument, string $expectedType, $actualValue): self
     {
         if (is_object($actualValue)) {
             $actualType = get_class($actualValue);
