@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace F500\Equatable\Tests;
 
-use F500\Equatable\ImmutableEquatableMap;
+use F500\Equatable\EquatableMap;
 use F500\Equatable\Tests\Objects\EquatableObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -28,9 +28,9 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
-        $this->assertInstanceOf(ImmutableEquatableMap::class, $map);
+        $this->assertInstanceOf(EquatableMap::class, $map);
     }
 
     /**
@@ -38,9 +38,9 @@ final class ImmutableEquatableMapTest extends TestCase
      */
     public function it_is_created_empty()
     {
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
-        $this->assertInstanceOf(ImmutableEquatableMap::class, $map);
+        $this->assertInstanceOf(EquatableMap::class, $map);
     }
 
     /**
@@ -49,9 +49,9 @@ final class ImmutableEquatableMapTest extends TestCase
      */
     public function it_cannot_be_created_with_items_that_are_not_equatable()
     {
-        $map = new ImmutableEquatableMap(['foo' => 'not an equatable item']);
+        $map = new EquatableMap(['foo' => 'not an equatable item']);
 
-        $this->assertInstanceOf(ImmutableEquatableMap::class, $map);
+        $this->assertInstanceOf(EquatableMap::class, $map);
     }
 
     /**
@@ -67,7 +67,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $keys      = ['foo', 'bar', 'baz'];
         $items     = [$itemFoo, $itemBar, $itemBaz];
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
         foreach ($map as $key => $value) {
             $this->assertSame($keys[$iteration], $key);
@@ -86,7 +86,7 @@ final class ImmutableEquatableMapTest extends TestCase
     {
         $iteration = 0;
 
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
         foreach ($map as $item) {
             $iteration++;
@@ -104,7 +104,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
         $this->assertSame(3, $map->count());
         $this->assertCount(3, $map);
@@ -120,7 +120,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz = new EquatableObject('baz');
 
         $items = ['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz];
-        $map   = new ImmutableEquatableMap($items);
+        $map   = new EquatableMap($items);
 
         $clonedMap = clone $map;
 
@@ -140,7 +140,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
         $this->assertSame($itemFoo, $map->get('foo'));
         $this->assertSame($itemBar, $map->get('bar'));
@@ -153,7 +153,7 @@ final class ImmutableEquatableMapTest extends TestCase
      */
     public function it_cannot_expose_an_item_when_the_key_does_not_exist()
     {
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
         $map->get('foo');
     }
@@ -172,7 +172,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $map = new EquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
 
         $this->assertSame('foo', $map->search($itemFoo2));
         $this->assertSame('bar', $map->search($itemBar2));
@@ -187,7 +187,7 @@ final class ImmutableEquatableMapTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
         $map->search($item);
     }
@@ -204,7 +204,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(
+        $map = new EquatableMap(
             ['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]
         );
 
@@ -219,7 +219,7 @@ final class ImmutableEquatableMapTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
         $map->searchAll($item);
     }
@@ -232,7 +232,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo]);
+        $map = new EquatableMap(['foo' => $itemFoo]);
 
         $this->assertTrue($map->contains($itemFoo));
         $this->assertFalse($map->contains($itemBar));
@@ -245,7 +245,7 @@ final class ImmutableEquatableMapTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo]);
+        $map = new EquatableMap(['foo' => $itemFoo]);
 
         $this->assertTrue($map->containsKey('foo'));
         $this->assertFalse($map->containsKey('bar'));
@@ -265,7 +265,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(
+        $map = new EquatableMap(
             [
                 'foo'  => $itemFoo1,
                 'bar1' => $itemBar1,
@@ -286,8 +286,8 @@ final class ImmutableEquatableMapTest extends TestCase
      */
     public function it_equals_another_map_if_both_are_empty()
     {
-        $map   = new ImmutableEquatableMap([]);
-        $other = new ImmutableEquatableMap([]);
+        $map   = new EquatableMap([]);
+        $other = new EquatableMap([]);
 
         $this->assertTrue($map->equals($other));
     }
@@ -306,8 +306,8 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map   = new ImmutableEquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
-        $other = new ImmutableEquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2, 'baz' => $itemBaz2]);
+        $map   = new EquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $other = new EquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2, 'baz' => $itemBaz2]);
 
         $this->assertTrue($map->equals($other));
     }
@@ -326,8 +326,8 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map   = new ImmutableEquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
-        $other = new ImmutableEquatableMap(['bar' => $itemBar2, 'baz' => $itemBaz2, 'foo' => $itemFoo2]);
+        $map   = new EquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $other = new EquatableMap(['bar' => $itemBar2, 'baz' => $itemBaz2, 'foo' => $itemFoo2]);
 
         $this->assertTrue($map->equals($other));
     }
@@ -337,7 +337,7 @@ final class ImmutableEquatableMapTest extends TestCase
      */
     public function it_does_not_equal_if_the_other_is_not_an_equatable_map()
     {
-        $map   = new ImmutableEquatableMap([]);
+        $map   = new EquatableMap([]);
         $other = new stdClass();
 
         $this->assertFalse($map->equals($other));
@@ -356,8 +356,8 @@ final class ImmutableEquatableMapTest extends TestCase
 
         $itemBaz = new EquatableObject('baz');
 
-        $map   = new ImmutableEquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
-        $other = new ImmutableEquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2]);
+        $map   = new EquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
+        $other = new EquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2]);
 
         $this->assertFalse($map->equals($other));
     }
@@ -376,8 +376,8 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz = new EquatableObject('baz');
         $itemQux = new EquatableObject('qux');
 
-        $map   = new ImmutableEquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
-        $other = new ImmutableEquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2, 'qux' => $itemQux]);
+        $map   = new EquatableMap(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
+        $other = new EquatableMap(['foo' => $itemFoo2, 'bar' => $itemBar2, 'qux' => $itemQux]);
 
         $this->assertFalse($map->equals($other));
     }
@@ -391,7 +391,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $newMap = $map->add('baz', $itemBaz);
 
@@ -412,7 +412,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $map->add('baz', $itemBaz);
 
@@ -431,7 +431,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $map->add('bar', $itemBaz);
     }
@@ -447,7 +447,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
 
         $newMap = $map->remove($itemBaz2);
 
@@ -469,7 +469,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
 
         $map->remove($itemBaz2);
 
@@ -488,7 +488,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $newMap = $map->replace('bar', $itemBaz);
 
@@ -508,7 +508,7 @@ final class ImmutableEquatableMapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map = new ImmutableEquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $map->replace('bar', $itemBaz);
 
@@ -525,7 +525,7 @@ final class ImmutableEquatableMapTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $map = new ImmutableEquatableMap([]);
+        $map = new EquatableMap([]);
 
         $map->replace('foo', $itemFoo);
     }

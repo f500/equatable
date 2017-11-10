@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace F500\Equatable\Tests;
 
-use F500\Equatable\ImmutableEquatableVector;
+use F500\Equatable\EquatableVector;
 use F500\Equatable\Tests\Objects\EquatableObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -28,9 +28,9 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz]);
 
-        $this->assertInstanceOf(ImmutableEquatableVector::class, $vector);
+        $this->assertInstanceOf(EquatableVector::class, $vector);
     }
 
     /**
@@ -38,9 +38,9 @@ final class ImmutableEquatableVectorTest extends TestCase
      */
     public function it_is_created_empty()
     {
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
-        $this->assertInstanceOf(ImmutableEquatableVector::class, $vector);
+        $this->assertInstanceOf(EquatableVector::class, $vector);
     }
 
     /**
@@ -49,9 +49,9 @@ final class ImmutableEquatableVectorTest extends TestCase
      */
     public function it_cannot_be_created_with_items_that_are_not_equatable()
     {
-        $vector = new ImmutableEquatableVector(['not an equatable item']);
+        $vector = new EquatableVector(['not an equatable item']);
 
-        $this->assertInstanceOf(ImmutableEquatableVector::class, $vector);
+        $this->assertInstanceOf(EquatableVector::class, $vector);
     }
 
     /**
@@ -66,7 +66,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $iteration = 0;
         $items     = [$itemFoo, $itemBar, $itemBaz];
 
-        $vector = new ImmutableEquatableVector($items);
+        $vector = new EquatableVector($items);
 
         foreach ($vector as $key => $value) {
             $this->assertSame($iteration, $key);
@@ -85,7 +85,7 @@ final class ImmutableEquatableVectorTest extends TestCase
     {
         $iteration = 0;
 
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
         foreach ($vector as $item) {
             $iteration++;
@@ -106,7 +106,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $iteration = 0;
         $items     = [$itemFoo, $itemBar, $itemBaz];
 
-        $vector = new ImmutableEquatableVector([2 => $itemFoo, 4 => $itemBar, 8 => $itemBaz]);
+        $vector = new EquatableVector([2 => $itemFoo, 4 => $itemBar, 8 => $itemBaz]);
 
         foreach ($vector as $key => $value) {
             $this->assertSame($iteration, $key);
@@ -127,7 +127,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz]);
 
         $this->assertSame(3, $vector->count());
         $this->assertCount(3, $vector);
@@ -143,7 +143,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz = new EquatableObject('baz');
 
         $items  = [$itemFoo, $itemBar, $itemBaz];
-        $vector = new ImmutableEquatableVector($items);
+        $vector = new EquatableVector($items);
 
         $clonedVector = clone $vector;
 
@@ -163,7 +163,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz]);
 
         $this->assertSame($itemFoo, $vector->get(0));
         $this->assertSame($itemBar, $vector->get(1));
@@ -176,7 +176,7 @@ final class ImmutableEquatableVectorTest extends TestCase
      */
     public function it_cannot_expose_an_item_when_the_key_does_not_exist()
     {
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
         $vector->get(0);
     }
@@ -195,7 +195,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
 
         $this->assertSame(0, $vector->search($itemFoo2));
         $this->assertSame(1, $vector->search($itemBar2));
@@ -214,7 +214,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
         $this->assertSame(0, $vector->search($itemFoo3));
     }
@@ -227,7 +227,7 @@ final class ImmutableEquatableVectorTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
         $vector->search($item);
     }
@@ -244,7 +244,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
         $this->assertSame([0, 2], $vector->searchAll($itemFoo3));
     }
@@ -257,7 +257,7 @@ final class ImmutableEquatableVectorTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
         $vector->searchAll($item);
     }
@@ -270,7 +270,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $vector = new ImmutableEquatableVector([$itemFoo]);
+        $vector = new EquatableVector([$itemFoo]);
 
         $this->assertTrue($vector->contains($itemFoo));
         $this->assertFalse($vector->contains($itemBar));
@@ -283,7 +283,7 @@ final class ImmutableEquatableVectorTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $vector = new ImmutableEquatableVector([$itemFoo]);
+        $vector = new EquatableVector([$itemFoo]);
 
         $this->assertTrue($vector->containsIndex(0));
         $this->assertFalse($vector->containsIndex(1));
@@ -303,7 +303,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBar1, $itemBaz1, $itemBaz1, $itemBaz1]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBar1, $itemBaz1, $itemBaz1, $itemBaz1]);
 
         $this->assertSame(1, $vector->countItem($itemFoo2));
         $this->assertSame(2, $vector->countItem($itemBar2));
@@ -315,8 +315,8 @@ final class ImmutableEquatableVectorTest extends TestCase
      */
     public function it_equals_another_vector_if_both_are_empty()
     {
-        $vector = new ImmutableEquatableVector([]);
-        $other  = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
+        $other  = new EquatableVector([]);
 
         $this->assertTrue($vector->equals($other));
     }
@@ -335,8 +335,8 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
-        $other  = new ImmutableEquatableVector([$itemFoo2, $itemBar2, $itemBaz2]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
+        $other  = new EquatableVector([$itemFoo2, $itemBar2, $itemBaz2]);
 
         $this->assertTrue($vector->equals($other));
     }
@@ -355,8 +355,8 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
-        $other  = new ImmutableEquatableVector([$itemBar2, $itemBaz2, $itemFoo2]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBaz1]);
+        $other  = new EquatableVector([$itemBar2, $itemBaz2, $itemFoo2]);
 
         $this->assertTrue($vector->equals($other));
     }
@@ -366,7 +366,7 @@ final class ImmutableEquatableVectorTest extends TestCase
      */
     public function it_does_not_equal_if_the_other_is_not_an_equatable_vector()
     {
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
         $other  = new stdClass();
 
         $this->assertFalse($vector->equals($other));
@@ -385,8 +385,8 @@ final class ImmutableEquatableVectorTest extends TestCase
 
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBaz]);
-        $other  = new ImmutableEquatableVector([$itemFoo2, $itemBar2]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBaz]);
+        $other  = new EquatableVector([$itemFoo2, $itemBar2]);
 
         $this->assertFalse($vector->equals($other));
     }
@@ -405,8 +405,8 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz = new EquatableObject('baz');
         $itemQux = new EquatableObject('qux');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar1, $itemBaz]);
-        $other  = new ImmutableEquatableVector([$itemFoo2, $itemBar2, $itemQux]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar1, $itemBaz]);
+        $other  = new EquatableVector([$itemFoo2, $itemBar2, $itemQux]);
 
         $this->assertFalse($vector->equals($other));
     }
@@ -422,8 +422,8 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemFoo2, $itemFoo2]);
-        $other  = new ImmutableEquatableVector([$itemBar1, $itemBar1, $itemBar2]);
+        $vector = new EquatableVector([$itemFoo1, $itemFoo2, $itemFoo2]);
+        $other  = new EquatableVector([$itemBar1, $itemBar1, $itemBar2]);
 
         $this->assertFalse($vector->equals($other));
     }
@@ -437,7 +437,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar]);
+        $vector = new EquatableVector([$itemFoo, $itemBar]);
 
         $newVector = $vector->add($itemBaz);
 
@@ -458,7 +458,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar]);
+        $vector = new EquatableVector([$itemFoo, $itemBar]);
 
         $vector->add($itemBaz);
 
@@ -478,7 +478,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar, $itemBaz1]);
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz1]);
 
         $newVector = $vector->remove($itemBaz2);
 
@@ -501,7 +501,7 @@ final class ImmutableEquatableVectorTest extends TestCase
 
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar1, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo, $itemBar1, $itemBaz]);
 
         $newVector = $vector->remove($itemBar2);
 
@@ -521,7 +521,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+        $vector = new EquatableVector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
         $newVector = $vector->remove($itemFoo3);
 
@@ -544,7 +544,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar, $itemBaz1]);
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz1]);
 
         $vector->remove($itemBaz2);
 
@@ -563,7 +563,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar]);
+        $vector = new EquatableVector([$itemFoo, $itemBar]);
 
         $newVector = $vector->replace(1, $itemBaz);
 
@@ -583,7 +583,7 @@ final class ImmutableEquatableVectorTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new ImmutableEquatableVector([$itemFoo, $itemBar]);
+        $vector = new EquatableVector([$itemFoo, $itemBar]);
 
         $vector->replace(1, $itemBaz);
 
@@ -600,7 +600,7 @@ final class ImmutableEquatableVectorTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $vector = new ImmutableEquatableVector([]);
+        $vector = new EquatableVector([]);
 
         $vector->replace(0, $itemFoo);
     }
