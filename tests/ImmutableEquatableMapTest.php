@@ -88,6 +88,7 @@ final class ImmutableEquatableMapTest extends TestCase
 
         $map = new EquatableMap([]);
 
+        /** @noinspection PhpUnusedLocalVariableInspection */
         foreach ($map as $item) {
             $iteration++;
         }

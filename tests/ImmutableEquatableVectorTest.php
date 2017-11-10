@@ -87,6 +87,7 @@ final class ImmutableEquatableVectorTest extends TestCase
 
         $vector = new EquatableVector([]);
 
+        /** @noinspection PhpUnusedLocalVariableInspection */
         foreach ($vector as $item) {
             $iteration++;
         }
