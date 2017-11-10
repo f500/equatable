@@ -187,6 +187,19 @@ final class EquatableMap implements Equatable, Countable, IteratorAggregate
         return new self($items);
     }
 
+    public function diff(self $other): self
+    {
+        $items = [];
+
+        foreach ($this->items as $key => $item) {
+            if (!$other->contains($item)) {
+                $items[$key] = $item;
+            }
+        }
+
+        return new self($items);
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);

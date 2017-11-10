@@ -633,4 +633,31 @@ final class ImmutableEquatableVectorTest extends TestCase
         $this->assertSame($itemBar2, $intersect->get(0));
         $this->assertSame($itemBaz2, $intersect->get(1));
     }
+
+    /**
+     * @test
+     */
+    public function it_exposes_all_items_in_this_vector_that_are_not_present_in_the_other_vector()
+    {
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBaz1 = new EquatableObject('baz');
+
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz2 = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
+
+        $vector = new EquatableVector([$itemFoo, $itemBar1, $itemBaz1]);
+        $other  = new EquatableVector([$itemBar2, $itemBaz2, $itemQux]);
+
+        $diff = $vector->diff($other);
+
+        $this->assertCount(1, $diff);
+        $this->assertSame($itemFoo, $diff->get(0));
+
+        $diff = $other->diff($vector);
+
+        $this->assertCount(1, $diff);
+        $this->assertSame($itemQux, $diff->get(0));
+    }
 }
