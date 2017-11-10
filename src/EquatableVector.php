@@ -196,6 +196,21 @@ final class EquatableVector implements Equatable, Countable, IteratorAggregate
         return new self($items);
     }
 
+    /**
+     * The filter callable is given an equatable item, and should return
+     * a boolean indicating whether the item remains or not.
+     *
+     * function (Equatable $item): bool {
+     *     return true;
+     * }
+     */
+    public function filter(callable $filter): self
+    {
+        return new self(
+            array_filter($this->items, $filter)
+        );
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);

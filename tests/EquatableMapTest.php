@@ -10,6 +10,7 @@ namespace F500\Equatable\Tests;
 
 use F500\Equatable\EquatableMap;
 use F500\Equatable\Tests\Objects\EquatableObject;
+use F500\Equatable\Tests\Objects\EquatableObjectWithToString;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -641,5 +642,51 @@ final class EquatableMapTest extends TestCase
 
         $this->assertCount(1, $diff);
         $this->assertSame('qux', $diff[0]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_filters_items()
+    {
+        $itemFoo = new EquatableObjectWithToString('foo');
+        $itemBar = new EquatableObjectWithToString('bar');
+        $itemBaz = new EquatableObjectWithToString('baz');
+        $itemQux = new EquatableObjectWithToString('qux');
+
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz, 'qux' => $itemQux]);
+
+        $filtered = $map->filter(
+            function (EquatableObjectWithToString $item): bool {
+                return (substr($item->toString(), 0, 2) === 'ba');
+            }
+        );
+
+        $this->assertCount(2, $filtered);
+        $this->assertSame($itemBar, $filtered->get('bar'));
+        $this->assertSame($itemBaz, $filtered->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_filters_items_by_key()
+    {
+        $itemFoo = new EquatableObjectWithToString('foo');
+        $itemBar = new EquatableObjectWithToString('bar');
+        $itemBaz = new EquatableObjectWithToString('baz');
+        $itemQux = new EquatableObjectWithToString('qux');
+
+        $map = new EquatableMap(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz, 'qux' => $itemQux]);
+
+        $filtered = $map->filter(
+            function (EquatableObjectWithToString $item, string $key): bool {
+                return (substr($key, 0, 2) === 'ba');
+            }
+        );
+
+        $this->assertCount(2, $filtered);
+        $this->assertSame($itemBar, $filtered->get('bar'));
+        $this->assertSame($itemBaz, $filtered->get('baz'));
     }
 }

@@ -226,6 +226,21 @@ final class EquatableMap implements Equatable, Countable, IteratorAggregate
         return $keys;
     }
 
+    /**
+     * The filter callable is given an equatable item, and should return
+     * a boolean indicating whether the item remains or not.
+     *
+     * function (Equatable $item, string $key): bool {
+     *     return true;
+     * }
+     */
+    public function filter(callable $filter): self
+    {
+        return new self(
+            array_filter($this->items, $filter, ARRAY_FILTER_USE_BOTH)
+        );
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
