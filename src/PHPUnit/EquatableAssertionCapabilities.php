@@ -10,6 +10,11 @@ namespace F500\Equatable\PHPUnit;
 
 use F500\Equatable\PHPUnit\Constraint\EquatableCollectionContains;
 use F500\Equatable\PHPUnit\Constraint\IsEqual;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Constraint\Attribute;
+use PHPUnit\Framework\Constraint\LogicalNot;
+use PHPUnit\Framework\Constraint\StringContains;
+use PHPUnit\Util\InvalidArgumentHelper;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -37,7 +42,7 @@ trait EquatableAssertionCapabilities
     ) {
         $constraint = self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase);
 
-        \PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -58,11 +63,11 @@ trait EquatableAssertionCapabilities
         $canonicalize = false,
         $ignoreCase = false
     ) {
-        $constraint = new \PHPUnit_Framework_Constraint_Not(
+        $constraint = new LogicalNot(
             self::equalTo($expected, $delta, $maxDepth, $canonicalize, $ignoreCase)
         );
 
-        \PHPUnit_Framework_Assert::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -85,15 +90,15 @@ trait EquatableAssertionCapabilities
             $constraint = self::contains($needle, $checkForObjectIdentity, $checkForNonObjectIdentity);
         } elseif (is_string($haystack)) {
             if (!is_string($needle)) {
-                throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+                throw InvalidArgumentHelper::factory(1, 'string');
             }
 
-            $constraint = new \PHPUnit_Framework_Constraint_StringContains($needle, $ignoreCase);
+            $constraint = new StringContains($needle, $ignoreCase);
         } else {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array, traversable or string');
+            throw InvalidArgumentHelper::factory(2, 'array, traversable or string');
         }
 
-        \PHPUnit_Framework_Assert::assertThat($haystack, $constraint, $message);
+        Assert::assertThat($haystack, $constraint, $message);
     }
 
     /**
@@ -113,22 +118,22 @@ trait EquatableAssertionCapabilities
         $checkForNonObjectIdentity = false
     ) {
         if (is_array($haystack) || is_object($haystack) && $haystack instanceof \Traversable) {
-            $constraint = new \PHPUnit_Framework_Constraint_Not(
+            $constraint = new LogicalNot(
                 self::contains($needle, $checkForObjectIdentity, $checkForNonObjectIdentity)
             );
         } elseif (is_string($haystack)) {
             if (!is_string($needle)) {
-                throw \PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+                throw InvalidArgumentHelper::factory(1, 'string');
             }
 
-            $constraint = new \PHPUnit_Framework_Constraint_Not(
-                new \PHPUnit_Framework_Constraint_StringContains($needle, $ignoreCase)
+            $constraint = new LogicalNot(
+                new StringContains($needle, $ignoreCase)
             );
         } else {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(2, 'array, traversable or string');
+            throw InvalidArgumentHelper::factory(2, 'array, traversable or string');
         }
 
-        \PHPUnit_Framework_Assert::assertThat($haystack, $constraint, $message);
+        Assert::assertThat($haystack, $constraint, $message);
     }
 
     /**
@@ -159,7 +164,7 @@ trait EquatableAssertionCapabilities
      * @param bool   $canonicalize
      * @param bool   $ignoreCase
      *
-     * @return \PHPUnit_Framework_Constraint_Attribute
+     * @return Attribute
      */
     public static function attributeEqualTo(
         $attributeName,
@@ -169,7 +174,7 @@ trait EquatableAssertionCapabilities
         $canonicalize = false,
         $ignoreCase = false
     ) {
-        return \PHPUnit_Framework_Assert::attribute(
+        return Assert::attribute(
             self::equalTo($value, $delta, $maxDepth, $canonicalize, $ignoreCase),
             $attributeName
         );
