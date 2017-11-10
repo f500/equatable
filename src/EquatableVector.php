@@ -170,6 +170,19 @@ final class EquatableVector implements Equatable, Countable, IteratorAggregate
         return $count;
     }
 
+    public function intersect(self $other): self
+    {
+        $items = [];
+
+        foreach ($this->items as $item) {
+            if ($other->contains($item)) {
+                $items[] = $item;
+            }
+        }
+
+        return new self($items);
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
