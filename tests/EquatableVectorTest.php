@@ -710,4 +710,25 @@ final class EquatableVectorTest extends TestCase
         $this->assertSame('one', $mapped->get(1)->toString());
         $this->assertSame('onm', $mapped->get(2)->toString());
     }
+
+    /**
+     * @test
+     */
+    public function it_reduces_items_to_a_single_value()
+    {
+        $itemFoo = new EquatableObjectWithToString('bar');
+        $itemBar = new EquatableObjectWithToString('baz');
+        $itemBaz = new EquatableObjectWithToString('qux');
+
+        $vector = new EquatableVector([$itemFoo, $itemBar, $itemBaz]);
+
+        $reduced = $vector->reduce(
+            function (string $carry, EquatableObjectWithToString $item): string {
+                return $carry . $item->toString();
+            },
+            'foo'
+        );
+
+        $this->assertSame('foobarbazqux', $reduced);
+    }
 }

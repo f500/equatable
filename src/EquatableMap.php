@@ -256,6 +256,19 @@ final class EquatableMap implements Equatable, Countable, IteratorAggregate
         );
     }
 
+    /**
+     * The reducer callable is given the carry value and an equatable item,
+     * and should return the value it should be reduced to.
+     *
+     * function ($carry, Equatable $item) {
+     *     return $carry + 1;
+     * }
+     */
+    public function reduce(callable $reducer, $initial = null)
+    {
+        return array_reduce($this->items, $reducer, $initial);
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);

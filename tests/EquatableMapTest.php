@@ -714,4 +714,25 @@ final class EquatableMapTest extends TestCase
         $this->assertSame('one', $mapped->get('bar')->toString());
         $this->assertSame('onm', $mapped->get('baz')->toString());
     }
+
+    /**
+     * @test
+     */
+    public function it_reduces_items_to_a_single_value()
+    {
+        $itemFoo = new EquatableObjectWithToString('bar');
+        $itemBar = new EquatableObjectWithToString('baz');
+        $itemBaz = new EquatableObjectWithToString('qux');
+
+        $map = new EquatableMap([$itemFoo, $itemBar, $itemBaz]);
+
+        $reduced = $map->reduce(
+            function (string $carry, EquatableObjectWithToString $item): string {
+                return $carry . $item->toString();
+            },
+            'foo'
+        );
+
+        $this->assertSame('foobarbazqux', $reduced);
+    }
 }
