@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace F500\Equatable\Tests;
 
 use F500\Equatable\InRangeException;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.

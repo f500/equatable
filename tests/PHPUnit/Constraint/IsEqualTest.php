@@ -10,7 +10,7 @@ namespace F500\Equatable\Tests\PHPUnit\Constraint;
 
 use F500\Equatable\PHPUnit\Constraint\IsEqual;
 use F500\Equatable\Tests\Objects\EquatableObject;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -33,7 +33,7 @@ final class IsEqualTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that two equatable objects are equal
      */
     public function it_fails_to_evaluate_when_only_value_is_equatable()
@@ -61,7 +61,7 @@ final class IsEqualTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that two equatable objects are equal
      */
     public function it_fails_to_evaluate_when_only_other_is_equatable()

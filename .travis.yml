@@ -1,15 +1,13 @@
 language: php
 
 php:
-  - 5.5
-  - 5.6
   - 7.0
-  - hhvm
+  - 7.1
+  - 7.2
 
 matrix:
   allow_failures:
-    - php: 7.0
-    - php: hhvm
+    - php: 7.2
 
 install:
   - composer install --no-interaction --no-progress --prefer-dist
@@ -22,4 +20,4 @@ after_script:
   - tests/upload-coverage.sh
 
 notifications:
-  email: jasper@nerdsweide.nl
+  email: jasper@future500.nl

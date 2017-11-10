@@ -9,14 +9,15 @@ declare(strict_types=1);
 namespace F500\Equatable\PHPUnit\Constraint;
 
 use F500\Equatable\Equatable;
-use PHPUnit_Framework_ExpectationFailedException as ExpectationFailedException;
+use PHPUnit\Framework\Constraint\IsEqual as BaseIsEqual;
+use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
  * @author    Jasper N. Brouwer <jasper@future500.nl>
  */
-final class IsEqual extends \PHPUnit_Framework_Constraint_IsEqual
+final class IsEqual extends BaseIsEqual
 {
     /**
      * @inheritdoc

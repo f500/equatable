@@ -12,7 +12,7 @@ use F500\Equatable\ImmutableEquatableMap;
 use F500\Equatable\ImmutableEquatableVector;
 use F500\Equatable\PHPUnit\Constraint\EquatableCollectionContains;
 use F500\Equatable\Tests\Objects\EquatableObject;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
@@ -48,7 +48,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that an equatable map contains
      */
     public function it_fails_to_evaluate_when_an_equatable_map_does_not_contain_the_value()
@@ -63,7 +63,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that an equatable vector contains
      */
     public function it_fails_to_evaluate_when_an_equatable_vector_does_not_contain_the_value()
@@ -104,7 +104,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that an array contains
      */
     public function it_fails_to_evaluate_when_a_collection_does_not_contain_an_equatable_object()
@@ -132,7 +132,7 @@ final class EquatableCollectionContainsTest extends TestCase
 
     /**
      * @test
-     * @expectedException \PHPUnit_Framework_ExpectationFailedException
+     * @expectedException \PHPUnit\Framework\ExpectationFailedException
      * @expectedExceptionMessage Failed asserting that an array contains
      */
     public function it_fails_to_evaluate_when_a_collection_does_not_contain_a_non_equatable_object()

@@ -12,7 +12,7 @@ use F500\Equatable\OutOfRangeException;
 use F500\Equatable\Tests\Objects\EquatableObject;
 use F500\Equatable\Tests\Objects\EquatableObjectWithMagicToString;
 use F500\Equatable\Tests\Objects\EquatableObjectWithToString;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.

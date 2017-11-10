@@ -10,7 +10,7 @@ namespace F500\Equatable\Tests;
 
 use F500\Equatable\ImmutableEquatableMap;
 use F500\Equatable\Tests\Objects\EquatableObject;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**

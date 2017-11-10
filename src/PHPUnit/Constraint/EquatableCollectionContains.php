@@ -11,12 +11,13 @@ namespace F500\Equatable\PHPUnit\Constraint;
 use F500\Equatable\Equatable;
 use F500\Equatable\EquatableMap;
 use F500\Equatable\EquatableVector;
+use PHPUnit\Framework\Constraint\TraversableContains;
 
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
  * @author    Jasper N. Brouwer <jasper@future500.nl>
  */
-final class EquatableCollectionContains extends \PHPUnit_Framework_Constraint_TraversableContains
+final class EquatableCollectionContains extends TraversableContains
 {
     /**
      * @inheritdoc
