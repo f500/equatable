@@ -23,5 +23,11 @@
 
   "autoload-dev": {
     "psr-4": { "F500\\Equatable\\Tests\\": "tests/" }
+  },
+
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
   }
 }
