@@ -52,10 +52,22 @@ final class Map extends Collection
 
     public function remove($value): self
     {
-        $key   = $this->search($value);
         $items = $this->items;
+        $key   = $this->search($value);
 
         unset($items[$key]);
+
+        return new self($items);
+    }
+
+    public function removeAll($value): self
+    {
+        $items = $this->items;
+        $keys  = $this->searchAll($value);
+
+        foreach ($keys as $key) {
+            unset($items[$key]);
+        }
 
         return new self($items);
     }

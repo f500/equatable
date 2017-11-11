@@ -648,65 +648,7 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_a_new_vector_with_an_equatable_item_removed()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
-        $itemBaz1 = new EquatableObject('baz');
-        $itemBaz2 = new EquatableObject('baz');
-
-        $vector = new Vector([$itemFoo, $itemBar, $itemBaz1]);
-
-        $newVector = $vector->remove($itemBaz2);
-
-        $this->assertNotSame($vector, $newVector);
-
-        $this->assertCount(2, $newVector);
-        $this->assertSame($itemFoo, $newVector->get(0));
-        $this->assertSame($itemBar, $newVector->get(1));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_vector_with_a_scalar_item_removed()
-    {
-        $vector = new Vector(['foo', 'bar', 'baz']);
-
-        $newVector = $vector->remove('baz');
-
-        $this->assertNotSame($vector, $newVector);
-
-        $this->assertCount(2, $newVector);
-        $this->assertSame('foo', $newVector->get(0));
-        $this->assertSame('bar', $newVector->get(1));
-    }
-
-    /**
-     * @test
-     */
-    public function it_reindexes_items_when_removing_one()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz = new EquatableObject('baz');
-
-        $vector = new Vector([$itemFoo, $itemBar1, $itemBaz]);
-
-        $newVector = $vector->remove($itemBar2);
-
-        $this->assertSame($itemFoo, $newVector->get(0));
-        $this->assertSame($itemBaz, $newVector->get(1));
-    }
-
-    /**
-     * @test
-     */
-    public function it_removes_the_first_occurrence_of_an_equatable_item()
+    public function it_exposes_a_new_vector_with_the_first_occurrence_of_an_equatable_item_removed()
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
@@ -730,7 +672,7 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
-    public function it_removes_the_first_occurrence_of_a_scalar_item()
+    public function it_exposes_a_new_vector_with_the_first_occurrence_of_a_scalar_item_removed()
     {
         $vector = new Vector(['foo', 'bar', 'foo', 'baz']);
 
@@ -776,6 +718,81 @@ final class VectorTest extends TestCase
         $vector = new Vector([]);
 
         $vector->remove($itemFoo);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_vector_with_all_occurrences_of_an_equatable_item_removed()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+
+        $newVector = $vector->removeAll($itemFoo3);
+
+        $this->assertNotSame($vector, $newVector);
+
+        $this->assertCount(2, $newVector);
+        $this->assertSame($itemBar, $newVector->get(0));
+        $this->assertSame($itemBaz, $newVector->get(1));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_vector_with_all_occurrences_of_a_scalar_item_removed()
+    {
+        $vector = new Vector(['foo', 'bar', 'foo', 'baz']);
+
+        $newVector = $vector->removeAll('foo');
+
+        $this->assertNotSame($vector, $newVector);
+
+        $this->assertCount(2, $newVector);
+        $this->assertSame('bar', $newVector->get(0));
+        $this->assertSame('baz', $newVector->get(1));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_items()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+
+        $vector->removeAll($itemFoo3);
+
+        $this->assertCount(4, $vector);
+        $this->assertSame($itemFoo1, $vector->get(0));
+        $this->assertSame($itemBar, $vector->get(1));
+        $this->assertSame($itemFoo2, $vector->get(2));
+        $this->assertSame($itemBaz, $vector->get(3));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_items_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+
+        $vector = new Vector([]);
+
+        $vector->removeAll($itemFoo);
     }
 
     /**

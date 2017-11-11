@@ -48,10 +48,22 @@ final class Vector extends Collection
 
     public function remove($value): self
     {
-        $index = $this->search($value);
         $items = $this->items;
+        $index = $this->search($value);
 
         unset($items[$index]);
+
+        return new self($items);
+    }
+
+    public function removeAll($value): self
+    {
+        $items   = $this->items;
+        $indexes = $this->searchAll($value);
+
+        foreach ($indexes as $index) {
+            unset($items[$index]);
+        }
 
         return new self($items);
     }

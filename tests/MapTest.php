@@ -640,45 +640,7 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_a_new_map_with_an_equatable_item_removed()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
-        $itemBaz1 = new EquatableObject('baz');
-        $itemBaz2 = new EquatableObject('baz');
-
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
-
-        $newMap = $map->remove($itemBaz2);
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(2, $newMap);
-        $this->assertSame($itemFoo, $newMap->get('foo'));
-        $this->assertSame($itemBar, $newMap->get('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_a_scalar_item_removed()
-    {
-        $map = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
-
-        $newMap = $map->remove('baz');
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(2, $newMap);
-        $this->assertSame('foo', $newMap->get('foo'));
-        $this->assertSame('bar', $newMap->get('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_removes_the_first_occurrence_of_an_equatable_item()
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_an_equatable_item_removed()
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
@@ -702,7 +664,7 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_removes_the_first_occurrence_of_a_scalar_item()
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_a_scalar_item_removed()
     {
         $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
 
@@ -748,6 +710,81 @@ final class MapTest extends TestCase
         $map = new Map([]);
 
         $map->remove($itemFoo);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_an_equatable_item_removed()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $newMap = $map->removeAll($itemFoo3);
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_a_scalar_item_removed()
+    {
+        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
+
+        $newMap = $map->removeAll('foo');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame('bar', $newMap->get('bar'));
+        $this->assertSame('baz', $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_items()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $map->removeAll($itemFoo3);
+
+        $this->assertCount(4, $map);
+        $this->assertSame($itemFoo1, $map->get('foo1'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemFoo2, $map->get('foo2'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_items_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+
+        $map = new Map([]);
+
+        $map->removeAll($itemFoo);
     }
 
     /**
