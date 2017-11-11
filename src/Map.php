@@ -72,6 +72,19 @@ final class Map extends Collection
         return new self($items);
     }
 
+    public function removeKey(string $key): self
+    {
+        if (!$this->containsKey($key)) {
+            throw OutOfRangeException::keyOutOfRange($key);
+        }
+
+        $items = $this->items;
+
+        unset($items[$key]);
+
+        return new self($items);
+    }
+
     public function replace($searchValue, $replacementValue): self
     {
         $items = $this->items;

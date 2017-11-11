@@ -790,6 +790,56 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_a_new_map_with_a_key_removed()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $newMap = $map->removeKey('baz');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame($itemFoo, $newMap->get('foo'));
+        $this->assertSame($itemBar, $newMap->get('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_a_key()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $map->removeKey('foo');
+
+        $this->assertCount(3, $map);
+        $this->assertSame($itemFoo, $map->get('foo'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_a_key_it_does_not_contain()
+    {
+        $map = new Map([]);
+
+        $map->removeKey('foo');
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_a_new_map_with_an_equatable_item_replaced()
     {
         $itemFoo  = new EquatableObject('foo');
