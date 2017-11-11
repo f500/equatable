@@ -60,15 +60,12 @@ final class Map extends Collection
         return new self($items);
     }
 
-    public function replace(string $key, $value): self
+    public function replace($searchValue, $replacementValue): self
     {
-        if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
-        }
-
         $items = $this->items;
+        $key   = $this->search($searchValue);
 
-        $items[$key] = $value;
+        $items[$key] = $replacementValue;
 
         return new self($items);
     }

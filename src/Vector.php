@@ -56,15 +56,12 @@ final class Vector extends Collection
         return new self($items);
     }
 
-    public function replace(int $index, $value): self
+    public function replace($searchValue, $replacementValue): self
     {
-        if (!$this->containsIndex($index)) {
-            throw OutOfRangeException::indexOutOfRange($index);
-        }
-
         $items = $this->items;
+        $index = $this->search($searchValue);
 
-        $items[$index] = $value;
+        $items[$index] = $replacementValue;
 
         return new self($items);
     }

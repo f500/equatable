@@ -755,13 +755,14 @@ final class MapTest extends TestCase
      */
     public function it_exposes_a_new_map_with_an_equatable_item_replaced()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar1]);
 
-        $newMap = $map->replace('bar', $itemBaz);
+        $newMap = $map->replace($itemBar2, $itemBaz);
 
         $this->assertNotSame($map, $newMap);
 
@@ -791,30 +792,32 @@ final class MapTest extends TestCase
      */
     public function it_is_unchanged_after_replacing_an_item()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar1]);
 
-        $map->replace('bar', $itemBaz);
+        $map->replace($itemBar2, $itemBaz);
 
         $this->assertCount(2, $map);
         $this->assertSame($itemFoo, $map->get('foo'));
-        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBar1, $map->get('bar'));
     }
 
     /**
      * @test
      * @expectedException \F500\Equatable\OutOfRangeException
      */
-    public function it_cannot_replace_an_item_when_the_key_does_not_exist()
+    public function it_cannot_replace_an_item_that_it_does_not_contain()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
         $map = new Map([]);
 
-        $map->replace('foo', $itemFoo);
+        $map->replace($itemFoo, $itemBar);
     }
 
     /**

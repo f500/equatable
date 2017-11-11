@@ -807,13 +807,14 @@ final class VectorTest extends TestCase
      */
     public function it_exposes_a_new_vector_with_an_equatable_item_replaced()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
-        $vector = new Vector([$itemFoo, $itemBar]);
+        $vector = new Vector([$itemFoo, $itemBar1]);
 
-        $newVector = $vector->replace(1, $itemBaz);
+        $newVector = $vector->replace($itemBar2, $itemBaz);
 
         $this->assertNotSame($vector, $newVector);
 
@@ -829,7 +830,7 @@ final class VectorTest extends TestCase
     {
         $vector = new Vector(['foo', 'bar']);
 
-        $newVector = $vector->replace(1, 'baz');
+        $newVector = $vector->replace('bar', 'baz');
 
         $this->assertNotSame($vector, $newVector);
 
@@ -843,30 +844,32 @@ final class VectorTest extends TestCase
      */
     public function it_is_unchanged_after_replacing_an_item()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
-        $vector = new Vector([$itemFoo, $itemBar]);
+        $vector = new Vector([$itemFoo, $itemBar1]);
 
-        $vector->replace(1, $itemBaz);
+        $vector->replace($itemBar2, $itemBaz);
 
         $this->assertCount(2, $vector);
         $this->assertSame($itemFoo, $vector->get(0));
-        $this->assertSame($itemBar, $vector->get(1));
+        $this->assertSame($itemBar1, $vector->get(1));
     }
 
     /**
      * @test
      * @expectedException \F500\Equatable\OutOfRangeException
      */
-    public function it_cannot_replace_an_item_when_the_index_does_not_exist()
+    public function it_cannot_replace_an_item_that_it_does_not_contain()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
         $vector = new Vector([]);
 
-        $vector->replace(0, $itemFoo);
+        $vector->replace($itemFoo, $itemBar);
     }
 
     /**
