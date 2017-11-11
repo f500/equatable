@@ -386,30 +386,6 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_whether_it_contains_an_equatable_item_at_certain_index_or_not()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $vector = new Vector([$itemFoo]);
-
-        $this->assertTrue($vector->containsIndex(0));
-        $this->assertFalse($vector->containsIndex(1));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_whether_it_contains_a_scalar_item_at_certain_index_or_not()
-    {
-        $vector = new Vector(['foo']);
-
-        $this->assertTrue($vector->containsIndex(0));
-        $this->assertFalse($vector->containsIndex(1));
-    }
-
-    /**
-     * @test
-     */
     public function it_counts_a_specific_equatable_item()
     {
         $itemFoo1 = new EquatableObject('foo');

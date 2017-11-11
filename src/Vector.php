@@ -68,7 +68,7 @@ final class Vector extends Collection
 
     public function get(int $index)
     {
-        if (!$this->containsIndex($index)) {
+        if (!isset($this->items[$index])) {
             throw OutOfRangeException::indexOutOfRange($index);
         }
 
@@ -84,11 +84,6 @@ final class Vector extends Collection
         }
 
         throw OutOfRangeException::valueOutOfRange($value);
-    }
-
-    public function containsIndex(int $index): bool
-    {
-        return isset($this->items[$index]);
     }
 
     public function intersect(self $other): self
