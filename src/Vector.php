@@ -78,6 +78,18 @@ final class Vector extends Collection
         return new self($items);
     }
 
+    public function replaceAll($searchValue, $replacementValue): self
+    {
+        $items   = $this->items;
+        $indexes = $this->searchAll($searchValue);
+
+        foreach ($indexes as $index) {
+            $items[$index] = $replacementValue;
+        }
+
+        return new self($items);
+    }
+
     public function get(int $index)
     {
         if (!isset($this->items[$index])) {

@@ -798,38 +798,45 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_a_new_vector_with_an_equatable_item_replaced()
+    public function it_exposes_a_new_vector_with_the_first_occurrence_of_an_equatable_item_replaced()
     {
-        $itemFoo  = new EquatableObject('foo');
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-        $itemBaz  = new EquatableObject('baz');
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
 
-        $vector = new Vector([$itemFoo, $itemBar1]);
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
 
-        $newVector = $vector->replace($itemBar2, $itemBaz);
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+
+        $newVector = $vector->replace($itemFoo3, $itemQux);
 
         $this->assertNotSame($vector, $newVector);
 
-        $this->assertCount(2, $newVector);
-        $this->assertSame($itemFoo, $newVector->get(0));
-        $this->assertSame($itemBaz, $newVector->get(1));
+        $this->assertCount(4, $newVector);
+        $this->assertSame($itemQux, $newVector->get(0));
+        $this->assertSame($itemBar, $newVector->get(1));
+        $this->assertSame($itemFoo2, $newVector->get(2));
+        $this->assertSame($itemBaz, $newVector->get(3));
     }
 
     /**
      * @test
      */
-    public function it_exposes_a_new_vector_with_a_scalar_item_replaced()
+    public function it_exposes_a_new_vector_with_the_first_occurrence_of_a_scalar_item_replaced()
     {
-        $vector = new Vector(['foo', 'bar']);
+        $vector = new Vector(['foo', 'bar', 'foo', 'baz']);
 
-        $newVector = $vector->replace('bar', 'baz');
+        $newVector = $vector->replace('foo', 'qux');
 
         $this->assertNotSame($vector, $newVector);
 
-        $this->assertCount(2, $newVector);
-        $this->assertSame('foo', $newVector->get(0));
-        $this->assertSame('baz', $newVector->get(1));
+        $this->assertCount(4, $newVector);
+        $this->assertSame('qux', $newVector->get(0));
+        $this->assertSame('bar', $newVector->get(1));
+        $this->assertSame('foo', $newVector->get(2));
+        $this->assertSame('baz', $newVector->get(3));
     }
 
     /**
@@ -837,18 +844,23 @@ final class VectorTest extends TestCase
      */
     public function it_is_unchanged_after_replacing_an_item()
     {
-        $itemFoo  = new EquatableObject('foo');
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-        $itemBaz  = new EquatableObject('baz');
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
 
-        $vector = new Vector([$itemFoo, $itemBar1]);
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
 
-        $vector->replace($itemBar2, $itemBaz);
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
-        $this->assertCount(2, $vector);
-        $this->assertSame($itemFoo, $vector->get(0));
-        $this->assertSame($itemBar1, $vector->get(1));
+        $vector->replace($itemFoo3, $itemQux);
+
+        $this->assertCount(4, $vector);
+        $this->assertSame($itemFoo1, $vector->get(0));
+        $this->assertSame($itemBar, $vector->get(1));
+        $this->assertSame($itemFoo2, $vector->get(2));
+        $this->assertSame($itemBaz, $vector->get(3));
     }
 
     /**
@@ -863,6 +875,88 @@ final class VectorTest extends TestCase
         $vector = new Vector([]);
 
         $vector->replace($itemFoo, $itemBar);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_vector_with_all_occurrences_of_an_equatable_item_replaced()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+
+        $newVector = $vector->replaceAll($itemFoo3, $itemQux);
+
+        $this->assertNotSame($vector, $newVector);
+
+        $this->assertCount(4, $newVector);
+        $this->assertSame($itemQux, $newVector->get(0));
+        $this->assertSame($itemBar, $newVector->get(1));
+        $this->assertSame($itemQux, $newVector->get(2));
+        $this->assertSame($itemBaz, $newVector->get(3));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_vector_with_all_occurrences_of_a_scalar_item_replaced()
+    {
+        $vector = new Vector(['foo', 'bar', 'foo', 'baz']);
+
+        $newVector = $vector->replaceAll('foo', 'qux');
+
+        $this->assertNotSame($vector, $newVector);
+
+        $this->assertCount(4, $newVector);
+        $this->assertSame('qux', $newVector->get(0));
+        $this->assertSame('bar', $newVector->get(1));
+        $this->assertSame('qux', $newVector->get(2));
+        $this->assertSame('baz', $newVector->get(3));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_replacing_items()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
+
+        $vector->replaceAll($itemFoo3, $itemQux);
+
+        $this->assertCount(4, $vector);
+        $this->assertSame($itemFoo1, $vector->get(0));
+        $this->assertSame($itemBar, $vector->get(1));
+        $this->assertSame($itemFoo2, $vector->get(2));
+        $this->assertSame($itemBaz, $vector->get(3));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_replace_items_that_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+
+        $vector = new Vector([]);
+
+        $vector->replaceAll($itemFoo, $itemBar);
     }
 
     /**

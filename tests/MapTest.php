@@ -840,38 +840,45 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_exposes_a_new_map_with_an_equatable_item_replaced()
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_an_equatable_item_replaced()
     {
-        $itemFoo  = new EquatableObject('foo');
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-        $itemBaz  = new EquatableObject('baz');
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
 
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar1]);
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
 
-        $newMap = $map->replace($itemBar2, $itemBaz);
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $newMap = $map->replace($itemFoo3, $itemQux);
 
         $this->assertNotSame($map, $newMap);
 
-        $this->assertCount(2, $newMap);
-        $this->assertSame($itemFoo, $newMap->get('foo'));
-        $this->assertSame($itemBaz, $newMap->get('bar'));
+        $this->assertCount(4, $newMap);
+        $this->assertSame($itemQux, $newMap->get('foo1'));
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemFoo2, $newMap->get('foo2'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
     }
 
     /**
      * @test
      */
-    public function it_exposes_a_new_map_with_a_scalar_item_replaced()
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_a_scalar_item_replaced()
     {
-        $map = new Map(['foo' => 'foo', 'bar' => 'bar']);
+        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
 
-        $newMap = $map->replace('bar', 'baz');
+        $newMap = $map->replace('foo', 'qux');
 
         $this->assertNotSame($map, $newMap);
 
-        $this->assertCount(2, $newMap);
-        $this->assertSame('foo', $newMap->get('foo'));
-        $this->assertSame('baz', $newMap->get('bar'));
+        $this->assertCount(4, $newMap);
+        $this->assertSame('qux', $newMap->get('foo1'));
+        $this->assertSame('bar', $newMap->get('bar'));
+        $this->assertSame('foo', $newMap->get('foo2'));
+        $this->assertSame('baz', $newMap->get('baz'));
     }
 
     /**
@@ -879,18 +886,23 @@ final class MapTest extends TestCase
      */
     public function it_is_unchanged_after_replacing_an_item()
     {
-        $itemFoo  = new EquatableObject('foo');
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-        $itemBaz  = new EquatableObject('baz');
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
 
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar1]);
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
 
-        $map->replace($itemBar2, $itemBaz);
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
-        $this->assertCount(2, $map);
-        $this->assertSame($itemFoo, $map->get('foo'));
-        $this->assertSame($itemBar1, $map->get('bar'));
+        $map->replace($itemFoo3, $itemQux);
+
+        $this->assertCount(4, $map);
+        $this->assertSame($itemFoo1, $map->get('foo1'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemFoo2, $map->get('foo2'));
+        $this->assertSame($itemBaz, $map->get('baz'));
     }
 
     /**
@@ -905,6 +917,88 @@ final class MapTest extends TestCase
         $map = new Map([]);
 
         $map->replace($itemFoo, $itemBar);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_an_equatable_item_replaced()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $newMap = $map->replaceAll($itemFoo3, $itemQux);
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(4, $newMap);
+        $this->assertSame($itemQux, $newMap->get('foo1'));
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemQux, $newMap->get('foo2'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_a_scalar_item_replaced()
+    {
+        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
+
+        $newMap = $map->replaceAll('foo', 'qux');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(4, $newMap);
+        $this->assertSame('qux', $newMap->get('foo1'));
+        $this->assertSame('bar', $newMap->get('bar'));
+        $this->assertSame('qux', $newMap->get('foo2'));
+        $this->assertSame('baz', $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_replacing_items()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $map->replaceAll($itemFoo3, $itemQux);
+
+        $this->assertCount(4, $map);
+        $this->assertSame($itemFoo1, $map->get('foo1'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemFoo2, $map->get('foo2'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_replace_items_that_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+
+        $map = new Map([]);
+
+        $map->replaceAll($itemFoo, $itemBar);
     }
 
     /**

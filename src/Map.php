@@ -95,6 +95,18 @@ final class Map extends Collection
         return new self($items);
     }
 
+    public function replaceAll($searchValue, $replacementValue): self
+    {
+        $items = $this->items;
+        $keys  = $this->searchAll($searchValue);
+
+        foreach ($keys as $key) {
+            $items[$key] = $replacementValue;
+        }
+
+        return new self($items);
+    }
+
     public function get(string $key)
     {
         if (!$this->containsKey($key)) {
