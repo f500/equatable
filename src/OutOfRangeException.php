@@ -26,8 +26,14 @@ final class OutOfRangeException extends BaseException
         return new self(sprintf('Collection does not contain the key "%s"', $key));
     }
 
-    public static function valueOutOfRange(Equatable $value): self
+    public static function valueOutOfRange($value): self
     {
+        if (!is_object($value)) {
+            return new self(
+                sprintf('Collection does not contain the value %s(%s)', gettype($value), print_r($value, true))
+            );
+        }
+
         if (method_exists($value, 'toString')) {
             $representation = $value->toString();
         } elseif (method_exists($value, '__toString')) {
@@ -36,6 +42,8 @@ final class OutOfRangeException extends BaseException
             $representation = spl_object_hash($value);
         }
 
-        return new self(sprintf('Collection does not contain the value %s(%s)', get_class($value), $representation));
+        return new self(
+            sprintf('Collection does not contain the value %s(%s)', get_class($value), $representation)
+        );
     }
 }

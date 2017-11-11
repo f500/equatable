@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace F500\Equatable\PHPUnit\Constraint;
 
 use F500\Equatable\Equatable;
-use F500\Equatable\EquatableMap;
-use F500\Equatable\EquatableVector;
+use F500\Equatable\Map;
+use F500\Equatable\Vector;
 use PHPUnit\Framework\Constraint\TraversableContains;
 
 /**
@@ -24,7 +24,7 @@ final class EquatableCollectionContains extends TraversableContains
      */
     protected function matches($other)
     {
-        if ($other instanceof EquatableMap || $other instanceof EquatableVector) {
+        if ($other instanceof Map || $other instanceof Vector) {
             return $other->contains($this->value);
         }
 
@@ -40,11 +40,11 @@ final class EquatableCollectionContains extends TraversableContains
      */
     protected function failureDescription($other)
     {
-        if ($other instanceof EquatableMap) {
+        if ($other instanceof Map) {
             return 'an equatable map ' . $this->toString();
         }
 
-        if ($other instanceof EquatableVector) {
+        if ($other instanceof Vector) {
             return 'an equatable vector ' . $this->toString();
         }
 

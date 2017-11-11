@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace F500\Equatable\Tests\PHPUnit\Constraint;
 
-use F500\Equatable\EquatableMap;
-use F500\Equatable\EquatableVector;
+use F500\Equatable\Map;
 use F500\Equatable\PHPUnit\Constraint\EquatableCollectionContains;
 use F500\Equatable\Tests\Objects\EquatableObject;
+use F500\Equatable\Vector;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +26,7 @@ final class EquatableCollectionContainsTest extends TestCase
     public function it_passes_evaluation_when_an_equatable_map_contains_the_value()
     {
         $value = new EquatableObject('foo');
-        $map   = new EquatableMap(['foo' => new EquatableObject('foo')]);
+        $map   = new Map(['foo' => new EquatableObject('foo')]);
 
         $constraint = new EquatableCollectionContains($value);
 
@@ -39,7 +39,7 @@ final class EquatableCollectionContainsTest extends TestCase
     public function it_evaluates_to_true_when_an_equatable_vector_contains_the_value()
     {
         $value  = new EquatableObject('foo');
-        $vector = new EquatableVector([new EquatableObject('foo')]);
+        $vector = new Vector([new EquatableObject('foo')]);
 
         $constraint = new EquatableCollectionContains($value);
 
@@ -54,7 +54,7 @@ final class EquatableCollectionContainsTest extends TestCase
     public function it_fails_to_evaluate_when_an_equatable_map_does_not_contain_the_value()
     {
         $value = new EquatableObject('foo');
-        $map   = new EquatableMap(['bar' => new EquatableObject('bar')]);
+        $map   = new Map(['bar' => new EquatableObject('bar')]);
 
         $constraint = new EquatableCollectionContains($value);
 
@@ -69,7 +69,7 @@ final class EquatableCollectionContainsTest extends TestCase
     public function it_fails_to_evaluate_when_an_equatable_vector_does_not_contain_the_value()
     {
         $value  = new EquatableObject('foo');
-        $vector = new EquatableVector(['bar' => new EquatableObject('bar')]);
+        $vector = new Vector(['bar' => new EquatableObject('bar')]);
 
         $constraint = new EquatableCollectionContains($value);
 
@@ -82,7 +82,7 @@ final class EquatableCollectionContainsTest extends TestCase
     public function it_evaluates_to_false_when_an_equatable_vector_does_not_contain_the_value()
     {
         $value  = new EquatableObject('foo');
-        $vector = new EquatableVector([new EquatableObject('bar')]);
+        $vector = new Vector([new EquatableObject('bar')]);
 
         $constraint = new EquatableCollectionContains($value);
 
