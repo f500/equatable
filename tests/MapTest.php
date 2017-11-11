@@ -1004,6 +1004,61 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_a_new_map_with_a_key_replaced()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $newMap = $map->replaceKey('foo', $itemQux);
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(3, $newMap);
+        $this->assertSame($itemQux, $newMap->get('foo'));
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_replacing_a_key()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $map->replaceKey('foo', $itemQux);
+
+        $this->assertCount(3, $map);
+        $this->assertSame($itemFoo, $map->get('foo'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_replace_a_key_that_it_does_not_contain()
+    {
+        $itemBar = new EquatableObject('bar');
+
+        $map = new Map([]);
+
+        $map->replaceKey('foo', $itemBar);
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_all_equatable_items_in_this_map_that_are_also_present_in_the_other_map()
     {
         $itemFoo  = new EquatableObject('foo');

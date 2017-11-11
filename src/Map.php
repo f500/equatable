@@ -107,6 +107,19 @@ final class Map extends Collection
         return new self($items);
     }
 
+    public function replaceKey(string $key, $replacementValue): self
+    {
+        if (!$this->containsKey($key)) {
+            throw OutOfRangeException::keyOutOfRange($key);
+        }
+
+        $items = $this->items;
+
+        $items[$key] = $replacementValue;
+
+        return new self($items);
+    }
+
     public function get(string $key)
     {
         if (!$this->containsKey($key)) {
