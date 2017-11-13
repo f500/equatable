@@ -65,15 +65,15 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
 
     public function searchAll($value): Vector
     {
-        $foundKeys = [];
+        $foundPointers = [];
 
         foreach ($this->items as $pointer => $item) {
             if ($this->theseAreEqual($item, $value)) {
-                $foundKeys[] = $pointer;
+                $foundPointers[] = $pointer;
             }
         }
 
-        return new Vector($foundKeys);
+        return new Vector($foundPointers);
     }
 
     /**
