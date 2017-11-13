@@ -8,6 +8,10 @@ declare(strict_types=1);
 
 namespace F500\Equatable;
 
+use F500\Equatable\Exceptions\InRangeException;
+use F500\Equatable\Exceptions\InvalidArgumentException;
+use F500\Equatable\Exceptions\OutOfRangeException;
+
 /**
  * @copyright Copyright (c) 2015 Future500 B.V.
  * @author    Jasper N. Brouwer <jasper@future500.nl>

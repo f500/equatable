@@ -56,7 +56,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
+     * @expectedException \F500\Equatable\Exceptions\InvalidArgumentException
      */
     public function it_cannot_be_created_with_items_that_are_not_scalar_or_object()
     {
@@ -181,7 +181,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_expose_an_item_when_the_index_does_not_exist()
     {
@@ -373,7 +373,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_find_an_item_it_does_not_contain()
     {
@@ -417,7 +417,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_find_any_items_it_does_not_contain()
     {
@@ -716,7 +716,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_replace_an_item_that_it_does_not_contain()
     {
@@ -796,7 +796,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_replace_items_that_it_does_not_contain()
     {
@@ -870,7 +870,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_remove_an_item_it_does_not_contain()
     {
@@ -943,7 +943,7 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_remove_items_it_does_not_contain()
     {

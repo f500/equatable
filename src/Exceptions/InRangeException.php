@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace F500\Equatable;
+namespace F500\Equatable\Exceptions;
 
 use OutOfRangeException as BaseException;
 

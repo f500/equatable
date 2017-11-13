@@ -10,6 +10,8 @@ namespace F500\Equatable;
 
 use ArrayIterator;
 use Countable;
+use F500\Equatable\Exceptions\InvalidArgumentException;
+use F500\Equatable\Exceptions\OutOfRangeException;
 use IteratorAggregate;
 use Traversable;
 

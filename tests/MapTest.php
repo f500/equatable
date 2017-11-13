@@ -67,7 +67,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
+     * @expectedException \F500\Equatable\Exceptions\InvalidArgumentException
      */
     public function it_cannot_be_created_with_items_that_are_not_scalar_or_object()
     {
@@ -79,7 +79,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\InvalidArgumentException
+     * @expectedException \F500\Equatable\Exceptions\InvalidArgumentException
      */
     public function it_cannot_be_created_with_items_that_have_keys_that_are_not_strings()
     {
@@ -181,7 +181,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_expose_an_item_when_the_key_does_not_exist()
     {
@@ -404,7 +404,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_find_an_item_it_does_not_contain()
     {
@@ -453,7 +453,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_find_any_items_it_does_not_contain()
     {
@@ -723,7 +723,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\InRangeException
+     * @expectedException \F500\Equatable\Exceptions\InRangeException
      */
     public function it_cannot_add_an_item_when_the_key_already_exists()
     {
@@ -804,7 +804,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_replace_an_item_that_it_does_not_contain()
     {
@@ -884,7 +884,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_replace_items_that_it_does_not_contain()
     {
@@ -940,7 +940,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_replace_a_key_that_it_does_not_contain()
     {
@@ -1013,7 +1013,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_remove_an_item_it_does_not_contain()
     {
@@ -1086,7 +1086,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_remove_items_it_does_not_contain()
     {
@@ -1138,7 +1138,7 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
     public function it_cannot_remove_a_key_it_does_not_contain()
     {

@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace F500\Equatable\Tests;
+namespace F500\Equatable\Tests\Exceptions;
 
-use F500\Equatable\InRangeException;
+use F500\Equatable\Exceptions\InRangeException;
 use PHPUnit\Framework\TestCase;
 
 /**

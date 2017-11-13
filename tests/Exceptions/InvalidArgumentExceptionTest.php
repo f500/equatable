@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace F500\Equatable\Tests;
+namespace F500\Equatable\Tests\Exceptions;
 
-use F500\Equatable\InvalidArgumentException;
+use F500\Equatable\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
