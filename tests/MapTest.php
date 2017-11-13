@@ -154,6 +154,24 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_whether_its_empty_or_not()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $vector = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $this->assertFalse($vector->isEmpty());
+
+        $vector = new Map();
+
+        $this->assertTrue($vector->isEmpty());
+    }
+
+    /**
+     * @test
+     */
     public function it_counts_all_equatable_items()
     {
         $itemFoo = new EquatableObject('foo');

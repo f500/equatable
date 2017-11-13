@@ -21,6 +21,11 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
 {
     protected $items = [];
 
+    public function isEmpty(): bool
+    {
+        return !$this->items;
+    }
+
     abstract public function search($value);
 
     public function searchAll($value): Vector
