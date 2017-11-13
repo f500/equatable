@@ -17,7 +17,8 @@ final class Map extends Collection
     public function __construct(array $values = [])
     {
         foreach ($values as $key => $value) {
-            $this->guardAgainstNonScalarOrObject($value);
+            $this->guardAgainstInvalidKey($key);
+            $this->guardAgainstInvalidValue($value);
             $this->items[$key] = $value;
         }
     }
@@ -225,5 +226,12 @@ final class Map extends Collection
         $items = array_map($mapper, $this->items);
 
         return new self($items);
+    }
+
+    private function guardAgainstInvalidKey($key): void
+    {
+        if (!is_string($key)) {
+            throw InvalidArgumentException::invalidKeyTypeInArray('values', 'string', $key);
+        }
     }
 }

@@ -26,10 +26,20 @@ final class InvalidArgumentException extends BaseException
         );
     }
 
-    public static function invalidTypeInArray(string $argument, string $expectedType, $actualValue): self
+    public static function invalidValueTypeInArray(string $argument, string $expectedType, $actualValue): self
     {
         return self::create(
             'Each value in argument $%s must be of type %s, %s given',
+            $argument,
+            $expectedType,
+            $actualValue
+        );
+    }
+
+    public static function invalidKeyTypeInArray(string $argument, string $expectedType, $actualValue): self
+    {
+        return self::create(
+            'Each key in argument $%s must be of type %s, %s given',
             $argument,
             $expectedType,
             $actualValue
@@ -40,6 +50,8 @@ final class InvalidArgumentException extends BaseException
     {
         if (is_object($actualValue)) {
             $actualType = get_class($actualValue);
+        } elseif (is_resource($actualValue)) {
+            $actualType = get_resource_type($actualValue);
         } else {
             $actualType = gettype($actualValue);
         }

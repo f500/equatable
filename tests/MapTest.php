@@ -79,6 +79,17 @@ final class MapTest extends TestCase
 
     /**
      * @test
+     * @expectedException \F500\Equatable\InvalidArgumentException
+     */
+    public function it_cannot_be_created_with_items_that_have_keys_that_are_not_strings()
+    {
+        $itemFoo = new EquatableObject('foo');
+
+        new Map([0 => $itemFoo]);
+    }
+
+    /**
+     * @test
      */
     public function it_traverses_all_equatable_items_when_iterated_over()
     {
@@ -1321,11 +1332,11 @@ final class MapTest extends TestCase
      */
     public function it_reduces_equatable_items_to_a_single_value()
     {
-        $itemFoo = new EquatableObjectWithToString('bar');
-        $itemBar = new EquatableObjectWithToString('baz');
-        $itemBaz = new EquatableObjectWithToString('qux');
+        $itemBar = new EquatableObjectWithToString('bar');
+        $itemBaz = new EquatableObjectWithToString('baz');
+        $itemQux = new EquatableObjectWithToString('qux');
 
-        $map = new Map([$itemFoo, $itemBar, $itemBaz]);
+        $map = new Map(['bar' => $itemBar, 'baz' => $itemBaz, 'qux' => $itemQux]);
 
         $reducedValue = $map->reduce(
             function (string $carry, EquatableObjectWithToString $item): string {
@@ -1342,7 +1353,7 @@ final class MapTest extends TestCase
      */
     public function it_reduces_scalar_items_to_a_single_value()
     {
-        $map = new Map(['bar', 'baz', 'qux']);
+        $map = new Map(['bar' => 'bar', 'baz' => 'baz', 'qux' => 'qux']);
 
         $reducedValue = $map->reduce(
             function (string $carry, string $item): string {

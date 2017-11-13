@@ -17,7 +17,7 @@ final class Vector extends Collection
     public function __construct(array $values = [])
     {
         foreach ($values as $value) {
-            $this->guardAgainstNonScalarOrObject($value);
+            $this->guardAgainstInvalidValue($value);
             $this->items[] = $value;
         }
     }
