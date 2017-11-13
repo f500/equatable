@@ -220,13 +220,13 @@ final class MapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $vector = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
-        $this->assertFalse($vector->isEmpty());
+        $this->assertFalse($map->isEmpty());
 
-        $vector = new Map();
+        $map = new Map();
 
-        $this->assertTrue($vector->isEmpty());
+        $this->assertTrue($map->isEmpty());
     }
 
     /**
