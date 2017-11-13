@@ -277,7 +277,7 @@ final class Map extends Collection
         return new self($items);
     }
 
-    private function guardAgainstInvalidKey($key): void
+    private function guardAgainstInvalidKey($key)
     {
         if (!is_string($key)) {
             throw InvalidArgumentException::invalidKeyTypeInArray('values', 'string', $key);

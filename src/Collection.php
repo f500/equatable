@@ -102,7 +102,7 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return false;
     }
 
-    protected function guardAgainstInvalidValue($value): void
+    protected function guardAgainstInvalidValue($value)
     {
         if (!is_scalar($value) && !is_object($value)) {
             throw InvalidArgumentException::invalidValueTypeInArray('values', 'scalar or object', $value);
