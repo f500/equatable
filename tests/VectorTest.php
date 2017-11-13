@@ -25,7 +25,7 @@ final class VectorTest extends TestCase
      */
     public function it_is_created_empty()
     {
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $this->assertInstanceOf(Vector::class, $vector);
     }
@@ -117,7 +117,7 @@ final class VectorTest extends TestCase
     {
         $iteration = 0;
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         /** @noinspection PhpUnusedLocalVariableInspection */
         foreach ($vector as $item) {
@@ -250,7 +250,7 @@ final class VectorTest extends TestCase
      */
     public function it_cannot_expose_an_item_when_the_index_does_not_exist()
     {
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->get(0);
     }
@@ -326,7 +326,7 @@ final class VectorTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->search($item);
     }
@@ -371,7 +371,7 @@ final class VectorTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->searchAll($item);
     }
@@ -439,8 +439,8 @@ final class VectorTest extends TestCase
      */
     public function it_equals_another_vector_if_both_are_empty()
     {
-        $vector = new Vector([]);
-        $other  = new Vector([]);
+        $vector = new Vector();
+        $other  = new Vector();
 
         $this->assertTrue($vector->equals($other));
     }
@@ -512,7 +512,7 @@ final class VectorTest extends TestCase
      */
     public function it_does_not_equal_if_the_other_is_not_an_equatable_vector()
     {
-        $vector = new Vector([]);
+        $vector = new Vector();
         $other  = new stdClass();
 
         $this->assertFalse($vector->equals($other));
@@ -733,7 +733,7 @@ final class VectorTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->remove($itemFoo);
     }
@@ -808,7 +808,7 @@ final class VectorTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->removeAll($itemFoo);
     }
@@ -890,7 +890,7 @@ final class VectorTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->replace($itemFoo, $itemBar);
     }
@@ -972,7 +972,7 @@ final class VectorTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $vector = new Vector([]);
+        $vector = new Vector();
 
         $vector->replaceAll($itemFoo, $itemBar);
     }

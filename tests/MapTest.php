@@ -26,7 +26,7 @@ final class MapTest extends TestCase
      */
     public function it_is_created_empty()
     {
-        $map = new Map([]);
+        $map = new Map();
 
         $this->assertInstanceOf(Map::class, $map);
     }
@@ -141,7 +141,7 @@ final class MapTest extends TestCase
     {
         $iteration = 0;
 
-        $map = new Map([]);
+        $map = new Map();
 
         /** @noinspection PhpUnusedLocalVariableInspection */
         foreach ($map as $item) {
@@ -250,7 +250,7 @@ final class MapTest extends TestCase
      */
     public function it_cannot_expose_an_item_when_the_key_does_not_exist()
     {
-        $map = new Map([]);
+        $map = new Map();
 
         $map->get('foo');
     }
@@ -326,7 +326,7 @@ final class MapTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->search($item);
     }
@@ -376,7 +376,7 @@ final class MapTest extends TestCase
     {
         $item = new EquatableObject('foo');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->searchAll($item);
     }
@@ -475,8 +475,8 @@ final class MapTest extends TestCase
      */
     public function it_equals_another_map_if_both_are_empty()
     {
-        $map   = new Map([]);
-        $other = new Map([]);
+        $map   = new Map();
+        $other = new Map();
 
         $this->assertTrue($map->equals($other));
     }
@@ -548,7 +548,7 @@ final class MapTest extends TestCase
      */
     public function it_does_not_equal_if_the_other_is_not_an_equatable_map()
     {
-        $map   = new Map([]);
+        $map   = new Map();
         $other = new stdClass();
 
         $this->assertFalse($map->equals($other));
@@ -736,7 +736,7 @@ final class MapTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->remove($itemFoo);
     }
@@ -811,7 +811,7 @@ final class MapTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->removeAll($itemFoo);
     }
@@ -861,7 +861,7 @@ final class MapTest extends TestCase
      */
     public function it_cannot_remove_a_key_it_does_not_contain()
     {
-        $map = new Map([]);
+        $map = new Map();
 
         $map->removeKey('foo');
     }
@@ -943,7 +943,7 @@ final class MapTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->replace($itemFoo, $itemBar);
     }
@@ -1025,7 +1025,7 @@ final class MapTest extends TestCase
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->replaceAll($itemFoo, $itemBar);
     }
@@ -1080,7 +1080,7 @@ final class MapTest extends TestCase
     {
         $itemBar = new EquatableObject('bar');
 
-        $map = new Map([]);
+        $map = new Map();
 
         $map->replaceKey('foo', $itemBar);
     }
