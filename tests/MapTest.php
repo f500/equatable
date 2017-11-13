@@ -408,11 +408,12 @@ final class MapTest extends TestCase
      */
     public function it_cannot_find_an_item_it_does_not_contain()
     {
-        $item = new EquatableObject('foo');
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->search($item);
+        $map->search($itemBar);
     }
 
     /**
@@ -453,15 +454,18 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_find_any_items_it_does_not_contain()
+    public function it_exposes_an_empty_vector_when_it_cannot_find_any_items()
     {
-        $item = new EquatableObject('foo');
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->searchAll($item);
+        $newVector = $map->searchAll($itemBar);
+
+        $expectedVector = new Vector();
+        $this->assertTrue($expectedVector->equals($newVector));
     }
 
     /**
@@ -640,11 +644,11 @@ final class MapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map            = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-        $expectedVector = new Vector([$itemFoo, $itemBar, $itemBaz]);
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
         $newVector = $map->values();
 
+        $expectedVector = new Vector([$itemFoo, $itemBar, $itemBaz]);
         $this->assertTrue($expectedVector->equals($newVector));
     }
 
@@ -657,11 +661,11 @@ final class MapTest extends TestCase
         $itemBar = new EquatableObject('bar');
         $itemBaz = new EquatableObject('baz');
 
-        $map            = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-        $expectedVector = new Vector(['foo', 'bar', 'baz']);
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
 
         $newVector = $map->keys();
 
+        $expectedVector = new Vector(['foo', 'bar', 'baz']);
         $this->assertTrue($expectedVector->equals($newVector));
     }
 
@@ -810,10 +814,11 @@ final class MapTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->replace($itemFoo, $itemBar);
+        $map->replace($itemBar, $itemBaz);
     }
 
     /**
@@ -884,16 +889,18 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_replace_items_that_it_does_not_contain()
+    public function it_exposes_its_unchanged_self_when_it_cannot_find_any_items_to_replace()
     {
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->replaceAll($itemFoo, $itemBar);
+        $newMap = $map->replaceAll($itemBar, $itemBaz);
+
+        $this->assertSame($map, $newMap);
     }
 
     /**
@@ -944,11 +951,12 @@ final class MapTest extends TestCase
      */
     public function it_cannot_replace_a_key_that_it_does_not_contain()
     {
-        $itemBar = new EquatableObject('bar');
+        $itemFoo = new EquatableObject('foo');
+        $itemBaz = new EquatableObject('baz');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->replaceKey('foo', $itemBar);
+        $map->replaceKey('bar', $itemBaz);
     }
 
     /**
@@ -1018,10 +1026,11 @@ final class MapTest extends TestCase
     public function it_cannot_remove_an_item_it_does_not_contain()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->remove($itemFoo);
+        $map->remove($itemBar);
     }
 
     /**
@@ -1086,15 +1095,17 @@ final class MapTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_remove_items_it_does_not_contain()
+    public function it_exposes_its_unchanged_self_when_it_cannot_find_any_items_to_remove()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $map = new Map();
+        $map = new Map(['foo' => $itemFoo]);
 
-        $map->removeAll($itemFoo);
+        $newMap = $map->removeAll($itemBar);
+
+        $this->assertSame($map, $newMap);
     }
 
     /**
@@ -1142,9 +1153,11 @@ final class MapTest extends TestCase
      */
     public function it_cannot_remove_a_key_it_does_not_contain()
     {
-        $map = new Map();
+        $itemFoo = new EquatableObject('foo');
 
-        $map->removeKey('foo');
+        $map = new Map(['foo' => $itemFoo]);
+
+        $map->removeKey('bar');
     }
 
     /**

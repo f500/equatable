@@ -102,6 +102,10 @@ final class Vector extends Collection
         $items   = $this->items;
         $indexes = $this->searchAll($searchValue);
 
+        if ($indexes->isEmpty()) {
+            return $this;
+        }
+
         foreach ($indexes as $index) {
             $items[$index] = $replacementValue;
         }
@@ -123,6 +127,10 @@ final class Vector extends Collection
     {
         $items   = $this->items;
         $indexes = $this->searchAll($value);
+
+        if ($indexes->isEmpty()) {
+            return $this;
+        }
 
         foreach ($indexes as $index) {
             unset($items[$index]);

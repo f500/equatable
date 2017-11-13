@@ -73,10 +73,6 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
             }
         }
 
-        if (!$foundKeys) {
-            throw OutOfRangeException::valueOutOfRange($value);
-        }
-
         return new Vector($foundKeys);
     }
 

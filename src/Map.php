@@ -132,6 +132,10 @@ final class Map extends Collection
         $items = $this->items;
         $keys  = $this->searchAll($searchValue);
 
+        if ($keys->isEmpty()) {
+            return $this;
+        }
+
         foreach ($keys as $key) {
             $items[$key] = $replacementValue;
         }
@@ -166,6 +170,10 @@ final class Map extends Collection
     {
         $items = $this->items;
         $keys  = $this->searchAll($value);
+
+        if ($keys->isEmpty()) {
+            return $this;
+        }
 
         foreach ($keys as $key) {
             unset($items[$key]);

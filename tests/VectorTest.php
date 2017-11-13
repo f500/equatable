@@ -417,15 +417,18 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_find_any_items_it_does_not_contain()
+    public function it_exposes_an_empty_vector_when_it_cannot_find_any_items()
     {
-        $item = new EquatableObject('foo');
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $vector = new Vector();
+        $vector = new Vector([$itemFoo]);
 
-        $vector->searchAll($item);
+        $newVector = $vector->searchAll($itemBar);
+
+        $expectedVector = new Vector();
+        $this->assertTrue($expectedVector->equals($newVector));
     }
 
     /**
@@ -722,10 +725,11 @@ final class VectorTest extends TestCase
     {
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
 
-        $vector = new Vector();
+        $vector = new Vector([$itemFoo]);
 
-        $vector->replace($itemFoo, $itemBar);
+        $vector->replace($itemBar, $itemBaz);
     }
 
     /**
@@ -796,16 +800,18 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_replace_items_that_it_does_not_contain()
+    public function it_exposes_its_unchanged_self_when_it_cannot_find_any_items_to_replace()
     {
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
 
-        $vector = new Vector();
+        $vector = new Vector([$itemFoo]);
 
-        $vector->replaceAll($itemFoo, $itemBar);
+        $newVector = $vector->replaceAll($itemBar, $itemBaz);
+
+        $this->assertSame($vector, $newVector);
     }
 
     /**
@@ -875,10 +881,11 @@ final class VectorTest extends TestCase
     public function it_cannot_remove_an_item_it_does_not_contain()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $vector = new Vector();
+        $vector = new Vector([$itemFoo]);
 
-        $vector->remove($itemFoo);
+        $vector->remove($itemBar);
     }
 
     /**
@@ -943,15 +950,17 @@ final class VectorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
      */
-    public function it_cannot_remove_items_it_does_not_contain()
+    public function it_exposes_its_unchanged_self_when_it_cannot_find_any_items_to_remove()
     {
         $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
 
-        $vector = new Vector();
+        $vector = new Vector([$itemFoo]);
 
-        $vector->removeAll($itemFoo);
+        $newVector = $vector->removeAll($itemBar);
+
+        $this->assertSame($vector, $newVector);
     }
 
     /**
