@@ -262,10 +262,8 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -320,10 +318,8 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -354,7 +350,6 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
         $itemBar3 = new EquatableObject('bar');
@@ -397,9 +392,8 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $vector    = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
         $newVector = $vector->searchAll($itemFoo3);
@@ -452,10 +446,8 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -483,10 +475,8 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -525,11 +515,9 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz = new EquatableObject('baz');
+        $itemBaz  = new EquatableObject('baz');
 
         $vector = new Vector([$itemFoo1, $itemBar1, $itemBaz]);
         $other  = new Vector([$itemFoo2, $itemBar2]);
@@ -555,12 +543,10 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $vector = new Vector([$itemFoo1, $itemBar1, $itemBaz]);
         $other  = new Vector([$itemFoo2, $itemBar2, $itemQux]);
@@ -586,7 +572,6 @@ final class VectorTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
 
@@ -671,10 +656,9 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -715,10 +699,9 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -753,10 +736,9 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -797,10 +779,9 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -835,9 +816,8 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -873,9 +853,8 @@ final class VectorTest extends TestCase
      */
     public function it_is_unchanged_after_removing_an_item()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar  = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -910,9 +889,8 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -949,9 +927,8 @@ final class VectorTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $vector = new Vector([$itemFoo1, $itemBar, $itemFoo2, $itemBaz]);
 
@@ -985,7 +962,6 @@ final class VectorTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');
@@ -1035,7 +1011,6 @@ final class VectorTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');

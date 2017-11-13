@@ -262,10 +262,8 @@ final class MapTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -351,10 +349,8 @@ final class MapTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -385,7 +381,6 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
         $itemBar3 = new EquatableObject('bar');
@@ -428,9 +423,8 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $map = new Map(
             ['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]
@@ -484,14 +478,12 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_equals_another_map_if_both_contain_equal_equatable_items()
+    public function it_equals_another_map_if_both_contain_equal_equatable_items_at_the_same_key()
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -504,7 +496,7 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_equals_another_map_if_both_contain_equal_scalar_items()
+    public function it_equals_another_map_if_both_contain_equal_scalar_items_at_the_same_key()
     {
         $map   = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
         $other = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
@@ -519,10 +511,8 @@ final class MapTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -561,11 +551,9 @@ final class MapTest extends TestCase
     {
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
-
         $itemBar1 = new EquatableObject('bar');
         $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz = new EquatableObject('baz');
+        $itemBaz  = new EquatableObject('baz');
 
         $map   = new Map(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
         $other = new Map(['foo' => $itemFoo2, 'bar' => $itemBar2]);
@@ -589,8 +577,56 @@ final class MapTest extends TestCase
      */
     public function it_does_not_equal_if_the_other_contains_different_equatable_items()
     {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
+
+        $map   = new Map(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz]);
+        $other = new Map(['foo' => $itemFoo2, 'bar' => $itemBar2, 'qux' => $itemQux]);
+
+        $this->assertFalse($map->equals($other));
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_equal_if_the_other_contains_different_scalar_items()
+    {
         $map   = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
         $other = new Map(['foo' => 'foo', 'bar' => 'bar', 'qux' => 'qux']);
+
+        $this->assertFalse($map->equals($other));
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_equal_if_both_contain_equal_equatable_items_at_a_different_key()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+        $itemBaz1 = new EquatableObject('baz');
+        $itemBaz2 = new EquatableObject('baz');
+
+        $map   = new Map(['foo' => $itemFoo1, 'bar' => $itemBar1, 'baz' => $itemBaz1]);
+        $other = new Map(['foo' => $itemBar2, 'bar' => $itemBaz2, 'baz' => $itemFoo2]);
+
+        $this->assertFalse($map->equals($other));
+    }
+
+    /**
+     * @test
+     */
+
+    public function it_does_not_equal_if_both_contain_equal_scalar_items_at_a_different_key()
+    {
+        $map   = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
+        $other = new Map(['foo' => 'bar', 'bar' => 'baz', 'baz' => 'foo']);
 
         $this->assertFalse($map->equals($other));
     }
@@ -674,10 +710,9 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -718,10 +753,9 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -756,10 +790,9 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -800,10 +833,9 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-        $itemQux = new EquatableObject('qux');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
+        $itemQux  = new EquatableObject('qux');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -893,9 +925,8 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -931,9 +962,8 @@ final class MapTest extends TestCase
      */
     public function it_is_unchanged_after_removing_an_item()
     {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
+        $itemFoo  = new EquatableObject('foo');
+        $itemBar  = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
         $itemBaz2 = new EquatableObject('baz');
 
@@ -968,9 +998,8 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -1007,9 +1036,8 @@ final class MapTest extends TestCase
         $itemFoo1 = new EquatableObject('foo');
         $itemFoo2 = new EquatableObject('foo');
         $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
+        $itemBar  = new EquatableObject('bar');
+        $itemBaz  = new EquatableObject('baz');
 
         $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
 
@@ -1093,7 +1121,6 @@ final class MapTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');
@@ -1143,7 +1170,6 @@ final class MapTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');
@@ -1172,7 +1198,6 @@ final class MapTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');
@@ -1218,7 +1243,6 @@ final class MapTest extends TestCase
         $itemFoo  = new EquatableObject('foo');
         $itemBar1 = new EquatableObject('bar');
         $itemBaz1 = new EquatableObject('baz');
-
         $itemBar2 = new EquatableObject('bar');
         $itemBaz2 = new EquatableObject('baz');
         $itemQux  = new EquatableObject('qux');

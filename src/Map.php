@@ -63,6 +63,29 @@ final class Map extends Collection
         throw OutOfRangeException::valueOutOfRange($value);
     }
 
+    public function equals($other): bool
+    {
+        if (!$other instanceof static) {
+            return false;
+        }
+
+        if ($this->count() !== $other->count()) {
+            return false;
+        }
+
+        foreach ($this->items as $key => $item) {
+            if (!$other->containsKey($key)) {
+                return false;
+            }
+
+            if (!$this->theseAreEqual($item, $other->get($key))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function add(string $key, $value): self
     {
         if ($this->containsKey($key)) {

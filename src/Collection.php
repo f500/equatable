@@ -78,25 +78,6 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return new Vector($foundKeys);
     }
 
-    public function equals($other): bool
-    {
-        if (!$other instanceof static) {
-            return false;
-        }
-
-        if ($this->count() !== $other->count()) {
-            return false;
-        }
-
-        foreach ($this->items as $item) {
-            if ($this->countItem($item) !== $other->countItem($item)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * The reducer callable is given the carry value and an item,
      * and should return the value it is reduced to.

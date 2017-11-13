@@ -57,6 +57,25 @@ final class Vector extends Collection
         throw OutOfRangeException::valueOutOfRange($value);
     }
 
+    public function equals($other): bool
+    {
+        if (!$other instanceof static) {
+            return false;
+        }
+
+        if ($this->count() !== $other->count()) {
+            return false;
+        }
+
+        foreach ($this->items as $item) {
+            if ($this->countItem($item) !== $other->countItem($item)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function add($value): self
     {
         $items = $this->items;
