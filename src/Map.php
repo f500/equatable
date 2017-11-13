@@ -86,6 +86,13 @@ final class Map extends Collection
         return true;
     }
 
+    public function values(): Vector
+    {
+        $items = array_values($this->items);
+
+        return new Vector($items);
+    }
+
     public function add(string $key, $value): self
     {
         if ($this->containsKey($key)) {
