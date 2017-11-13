@@ -651,6 +651,23 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_a_vector_with_all_its_keys()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map            = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $expectedVector = new Vector(['foo', 'bar', 'baz']);
+
+        $newVector = $map->keys();
+
+        $this->assertTrue($expectedVector->equals($newVector));
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_a_new_map_with_an_equatable_item_added()
     {
         $itemFoo = new EquatableObject('foo');
