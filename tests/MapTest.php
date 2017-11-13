@@ -154,6 +154,66 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_its_equatable_items()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $this->assertSame($itemFoo, $map->get('foo'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_its_scalar_items()
+    {
+        $map = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
+
+        $this->assertSame('foo', $map->get('foo'));
+        $this->assertSame('bar', $map->get('bar'));
+        $this->assertSame('baz', $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_expose_an_item_when_the_key_does_not_exist()
+    {
+        $map = new Map();
+
+        $map->get('foo');
+    }
+
+    /**
+     * @test
+     */
+    public function it_clones_all_equatable_items_when_cloned_itself()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $items = ['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz];
+        $map   = new Map($items);
+
+        $clonedMap = clone $map;
+
+        $this->assertCount(3, $clonedMap);
+
+        foreach ($clonedMap as $key => $value) {
+            $this->assertNotSame($items[$key], $value);
+        }
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_whether_its_empty_or_not()
     {
         $itemFoo = new EquatableObject('foo');
@@ -198,61 +258,90 @@ final class MapTest extends TestCase
     /**
      * @test
      */
-    public function it_clones_all_equatable_items_when_cloned_itself()
+    public function it_counts_a_specific_equatable_item()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+
+        $itemBar1 = new EquatableObject('bar');
+        $itemBar2 = new EquatableObject('bar');
+
+        $itemBaz1 = new EquatableObject('baz');
+        $itemBaz2 = new EquatableObject('baz');
+
+        $map = new Map(
+            [
+                'foo'  => $itemFoo1,
+                'bar1' => $itemBar1,
+                'bar2' => $itemBar1,
+                'baz1' => $itemBaz1,
+                'baz2' => $itemBaz1,
+                'baz3' => $itemBaz1,
+            ]
+        );
+
+        $this->assertSame(1, $map->countItem($itemFoo2));
+        $this->assertSame(2, $map->countItem($itemBar2));
+        $this->assertSame(3, $map->countItem($itemBaz2));
+    }
+
+    /**
+     * @test
+     */
+    public function it_counts_a_specific_scalar_item()
+    {
+        $map = new Map(
+            [
+                'foo'  => 'foo',
+                'bar1' => 'bar',
+                'bar2' => 'bar',
+                'baz1' => 'baz',
+                'baz2' => 'baz',
+                'baz3' => 'baz',
+            ]
+        );
+
+        $this->assertSame(1, $map->countItem('foo'));
+        $this->assertSame(2, $map->countItem('bar'));
+        $this->assertSame(3, $map->countItem('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_whether_it_contains_an_equatable_item_or_not()
     {
         $itemFoo = new EquatableObject('foo');
         $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
 
-        $items = ['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz];
-        $map   = new Map($items);
+        $map = new Map(['foo' => $itemFoo]);
 
-        $clonedMap = clone $map;
-
-        $this->assertCount(3, $clonedMap);
-
-        foreach ($clonedMap as $key => $value) {
-            $this->assertNotSame($items[$key], $value);
-        }
+        $this->assertTrue($map->contains($itemFoo));
+        $this->assertFalse($map->contains($itemBar));
     }
 
     /**
      * @test
      */
-    public function it_exposes_its_equatable_items()
+    public function it_exposes_whether_it_contains_a_scalar_item_or_not()
+    {
+        $map = new Map(['foo' => 'foo']);
+
+        $this->assertTrue($map->contains('foo'));
+        $this->assertFalse($map->contains('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_whether_it_contains_an_item_at_certain_key_or_not()
     {
         $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
 
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $map = new Map(['foo' => $itemFoo]);
 
-        $this->assertSame($itemFoo, $map->get('foo'));
-        $this->assertSame($itemBar, $map->get('bar'));
-        $this->assertSame($itemBaz, $map->get('baz'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_its_scalar_items()
-    {
-        $map = new Map(['foo' => 'foo', 'bar' => 'bar', 'baz' => 'baz']);
-
-        $this->assertSame('foo', $map->get('foo'));
-        $this->assertSame('bar', $map->get('bar'));
-        $this->assertSame('baz', $map->get('baz'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
-     */
-    public function it_cannot_expose_an_item_when_the_key_does_not_exist()
-    {
-        $map = new Map();
-
-        $map->get('foo');
+        $this->assertTrue($map->containsKey('foo'));
+        $this->assertFalse($map->containsKey('bar'));
     }
 
     /**
@@ -379,95 +468,6 @@ final class MapTest extends TestCase
         $map = new Map();
 
         $map->searchAll($item);
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_whether_it_contains_an_equatable_item_or_not()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
-        $map = new Map(['foo' => $itemFoo]);
-
-        $this->assertTrue($map->contains($itemFoo));
-        $this->assertFalse($map->contains($itemBar));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_whether_it_contains_a_scalar_item_or_not()
-    {
-        $map = new Map(['foo' => 'foo']);
-
-        $this->assertTrue($map->contains('foo'));
-        $this->assertFalse($map->contains('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_whether_it_contains_an_item_at_certain_key_or_not()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new Map(['foo' => $itemFoo]);
-
-        $this->assertTrue($map->containsKey('foo'));
-        $this->assertFalse($map->containsKey('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_counts_a_specific_equatable_item()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-
-        $itemBar1 = new EquatableObject('bar');
-        $itemBar2 = new EquatableObject('bar');
-
-        $itemBaz1 = new EquatableObject('baz');
-        $itemBaz2 = new EquatableObject('baz');
-
-        $map = new Map(
-            [
-                'foo'  => $itemFoo1,
-                'bar1' => $itemBar1,
-                'bar2' => $itemBar1,
-                'baz1' => $itemBaz1,
-                'baz2' => $itemBaz1,
-                'baz3' => $itemBaz1,
-            ]
-        );
-
-        $this->assertSame(1, $map->countItem($itemFoo2));
-        $this->assertSame(2, $map->countItem($itemBar2));
-        $this->assertSame(3, $map->countItem($itemBaz2));
-    }
-
-    /**
-     * @test
-     */
-    public function it_counts_a_specific_scalar_item()
-    {
-        $map = new Map(
-            [
-                'foo'  => 'foo',
-                'bar1' => 'bar',
-                'bar2' => 'bar',
-                'baz1' => 'baz',
-                'baz2' => 'baz',
-                'baz3' => 'baz',
-            ]
-        );
-
-        $this->assertSame(1, $map->countItem('foo'));
-        $this->assertSame(2, $map->countItem('bar'));
-        $this->assertSame(3, $map->countItem('baz'));
     }
 
     /**
@@ -664,206 +664,6 @@ final class MapTest extends TestCase
         $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
 
         $map->add('bar', $itemBaz);
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_the_first_occurrence_of_an_equatable_item_removed()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-        $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
-
-        $newMap = $map->remove($itemFoo3);
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(3, $newMap);
-        $this->assertSame($itemBar, $newMap->get('bar'));
-        $this->assertSame($itemFoo2, $newMap->get('foo2'));
-        $this->assertSame($itemBaz, $newMap->get('baz'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_the_first_occurrence_of_a_scalar_item_removed()
-    {
-        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
-
-        $newMap = $map->remove('foo');
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(3, $newMap);
-        $this->assertSame('bar', $newMap->get('bar'));
-        $this->assertSame('foo', $newMap->get('foo2'));
-        $this->assertSame('baz', $newMap->get('baz'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_is_unchanged_after_removing_an_item()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-
-        $itemBaz1 = new EquatableObject('baz');
-        $itemBaz2 = new EquatableObject('baz');
-
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
-
-        $map->remove($itemBaz2);
-
-        $this->assertCount(3, $map);
-        $this->assertSame($itemFoo, $map->get('foo'));
-        $this->assertSame($itemBar, $map->get('bar'));
-        $this->assertSame($itemBaz1, $map->get('baz'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
-     */
-    public function it_cannot_remove_an_item_it_does_not_contain()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new Map();
-
-        $map->remove($itemFoo);
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_all_occurrences_of_an_equatable_item_removed()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-        $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
-
-        $newMap = $map->removeAll($itemFoo3);
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(2, $newMap);
-        $this->assertSame($itemBar, $newMap->get('bar'));
-        $this->assertSame($itemBaz, $newMap->get('baz'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_all_occurrences_of_a_scalar_item_removed()
-    {
-        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
-
-        $newMap = $map->removeAll('foo');
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(2, $newMap);
-        $this->assertSame('bar', $newMap->get('bar'));
-        $this->assertSame('baz', $newMap->get('baz'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_is_unchanged_after_removing_items()
-    {
-        $itemFoo1 = new EquatableObject('foo');
-        $itemFoo2 = new EquatableObject('foo');
-        $itemFoo3 = new EquatableObject('foo');
-
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
-
-        $map->removeAll($itemFoo3);
-
-        $this->assertCount(4, $map);
-        $this->assertSame($itemFoo1, $map->get('foo1'));
-        $this->assertSame($itemBar, $map->get('bar'));
-        $this->assertSame($itemFoo2, $map->get('foo2'));
-        $this->assertSame($itemBaz, $map->get('baz'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
-     */
-    public function it_cannot_remove_items_it_does_not_contain()
-    {
-        $itemFoo = new EquatableObject('foo');
-
-        $map = new Map();
-
-        $map->removeAll($itemFoo);
-    }
-
-    /**
-     * @test
-     */
-    public function it_exposes_a_new_map_with_a_key_removed()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-
-        $newMap = $map->removeKey('baz');
-
-        $this->assertNotSame($map, $newMap);
-
-        $this->assertCount(2, $newMap);
-        $this->assertSame($itemFoo, $newMap->get('foo'));
-        $this->assertSame($itemBar, $newMap->get('bar'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_is_unchanged_after_removing_a_key()
-    {
-        $itemFoo = new EquatableObject('foo');
-        $itemBar = new EquatableObject('bar');
-        $itemBaz = new EquatableObject('baz');
-
-        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
-
-        $map->removeKey('foo');
-
-        $this->assertCount(3, $map);
-        $this->assertSame($itemFoo, $map->get('foo'));
-        $this->assertSame($itemBar, $map->get('bar'));
-        $this->assertSame($itemBaz, $map->get('baz'));
-    }
-
-    /**
-     * @test
-     * @expectedException \F500\Equatable\OutOfRangeException
-     */
-    public function it_cannot_remove_a_key_it_does_not_contain()
-    {
-        $map = new Map();
-
-        $map->removeKey('foo');
     }
 
     /**
@@ -1083,6 +883,206 @@ final class MapTest extends TestCase
         $map = new Map();
 
         $map->replaceKey('foo', $itemBar);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_an_equatable_item_removed()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $newMap = $map->remove($itemFoo3);
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(3, $newMap);
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemFoo2, $newMap->get('foo2'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_the_first_occurrence_of_a_scalar_item_removed()
+    {
+        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
+
+        $newMap = $map->remove('foo');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(3, $newMap);
+        $this->assertSame('bar', $newMap->get('bar'));
+        $this->assertSame('foo', $newMap->get('foo2'));
+        $this->assertSame('baz', $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_an_item()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+
+        $itemBaz1 = new EquatableObject('baz');
+        $itemBaz2 = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz1]);
+
+        $map->remove($itemBaz2);
+
+        $this->assertCount(3, $map);
+        $this->assertSame($itemFoo, $map->get('foo'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBaz1, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_an_item_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+
+        $map = new Map();
+
+        $map->remove($itemFoo);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_an_equatable_item_removed()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $newMap = $map->removeAll($itemFoo3);
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame($itemBar, $newMap->get('bar'));
+        $this->assertSame($itemBaz, $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_all_occurrences_of_a_scalar_item_removed()
+    {
+        $map = new Map(['foo1' => 'foo', 'bar' => 'bar', 'foo2' => 'foo', 'baz' => 'baz']);
+
+        $newMap = $map->removeAll('foo');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame('bar', $newMap->get('bar'));
+        $this->assertSame('baz', $newMap->get('baz'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_items()
+    {
+        $itemFoo1 = new EquatableObject('foo');
+        $itemFoo2 = new EquatableObject('foo');
+        $itemFoo3 = new EquatableObject('foo');
+
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo1' => $itemFoo1, 'bar' => $itemBar, 'foo2' => $itemFoo2, 'baz' => $itemBaz]);
+
+        $map->removeAll($itemFoo3);
+
+        $this->assertCount(4, $map);
+        $this->assertSame($itemFoo1, $map->get('foo1'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemFoo2, $map->get('foo2'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_items_it_does_not_contain()
+    {
+        $itemFoo = new EquatableObject('foo');
+
+        $map = new Map();
+
+        $map->removeAll($itemFoo);
+    }
+
+    /**
+     * @test
+     */
+    public function it_exposes_a_new_map_with_a_key_removed()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $newMap = $map->removeKey('baz');
+
+        $this->assertNotSame($map, $newMap);
+
+        $this->assertCount(2, $newMap);
+        $this->assertSame($itemFoo, $newMap->get('foo'));
+        $this->assertSame($itemBar, $newMap->get('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_removing_a_key()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+
+        $map->removeKey('foo');
+
+        $this->assertCount(3, $map);
+        $this->assertSame($itemFoo, $map->get('foo'));
+        $this->assertSame($itemBar, $map->get('bar'));
+        $this->assertSame($itemBaz, $map->get('baz'));
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\OutOfRangeException
+     */
+    public function it_cannot_remove_a_key_it_does_not_contain()
+    {
+        $map = new Map();
+
+        $map->removeKey('foo');
     }
 
     /**

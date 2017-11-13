@@ -37,33 +37,31 @@ final class Vector extends Collection
         $this->items = $items;
     }
 
+    public function get(int $index)
+    {
+        if (!isset($this->items[$index])) {
+            throw OutOfRangeException::indexOutOfRange($index);
+        }
+
+        return $this->items[$index];
+    }
+
+    public function search($value): int
+    {
+        foreach ($this->items as $index => $item) {
+            if ($this->theseAreEqual($item, $value)) {
+                return $index;
+            }
+        }
+
+        throw OutOfRangeException::valueOutOfRange($value);
+    }
+
     public function add($value): self
     {
         $items = $this->items;
 
         $items[] = $value;
-
-        return new self($items);
-    }
-
-    public function remove($value): self
-    {
-        $items = $this->items;
-        $index = $this->search($value);
-
-        unset($items[$index]);
-
-        return new self($items);
-    }
-
-    public function removeAll($value): self
-    {
-        $items   = $this->items;
-        $indexes = $this->searchAll($value);
-
-        foreach ($indexes as $index) {
-            unset($items[$index]);
-        }
 
         return new self($items);
     }
@@ -90,24 +88,26 @@ final class Vector extends Collection
         return new self($items);
     }
 
-    public function get(int $index)
+    public function remove($value): self
     {
-        if (!isset($this->items[$index])) {
-            throw OutOfRangeException::indexOutOfRange($index);
-        }
+        $items = $this->items;
+        $index = $this->search($value);
 
-        return $this->items[$index];
+        unset($items[$index]);
+
+        return new self($items);
     }
 
-    public function search($value): int
+    public function removeAll($value): self
     {
-        foreach ($this->items as $index => $item) {
-            if ($this->theseAreEqual($item, $value)) {
-                return $index;
-            }
+        $items   = $this->items;
+        $indexes = $this->searchAll($value);
+
+        foreach ($indexes as $index) {
+            unset($items[$index]);
         }
 
-        throw OutOfRangeException::valueOutOfRange($value);
+        return new self($items);
     }
 
     public function intersect(self $other): self

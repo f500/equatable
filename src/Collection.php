@@ -21,9 +21,42 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
 {
     protected $items = [];
 
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->items);
+    }
+
     public function isEmpty(): bool
     {
         return !$this->items;
+    }
+
+    public function count(): int
+    {
+        return count($this->items);
+    }
+
+    public function countItem($value): int
+    {
+        $count = 0;
+
+        foreach ($this->items as $item) {
+            if ($this->theseAreEqual($item, $value)) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    public function contains($value): bool
+    {
+        try {
+            $this->search($value);
+            return true;
+        } catch (OutOfRangeException $e) {
+            return false;
+        }
     }
 
     abstract public function search($value);
@@ -45,16 +78,6 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return new Vector($foundKeys);
     }
 
-    public function contains($value): bool
-    {
-        try {
-            $this->search($value);
-            return true;
-        } catch (OutOfRangeException $e) {
-            return false;
-        }
-    }
-
     public function equals($other): bool
     {
         if (!$other instanceof static) {
@@ -74,24 +97,6 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return true;
     }
 
-    public function count(): int
-    {
-        return count($this->items);
-    }
-
-    public function countItem($value): int
-    {
-        $count = 0;
-
-        foreach ($this->items as $item) {
-            if ($this->theseAreEqual($item, $value)) {
-                $count++;
-            }
-        }
-
-        return $count;
-    }
-
     /**
      * The reducer callable is given the carry value and an item,
      * and should return the value it is reduced to.
@@ -105,18 +110,13 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return array_reduce($this->items, $reducer, $initial);
     }
 
-    public function getIterator(): Traversable
+    protected function theseAreEqual($left, $right): bool
     {
-        return new ArrayIterator($this->items);
-    }
-
-    protected function theseAreEqual($value1, $value2): bool
-    {
-        if ($value1 === $value2) {
+        if ($left === $right) {
             return true;
         }
 
-        if ($value1 instanceof Equatable && $value1->equals($value2)) {
+        if ($left instanceof Equatable && $left->equals($right)) {
             return true;
         }
 

@@ -38,6 +38,31 @@ final class Map extends Collection
         $this->items = $items;
     }
 
+    public function get(string $key)
+    {
+        if (!$this->containsKey($key)) {
+            throw OutOfRangeException::keyOutOfRange($key);
+        }
+
+        return $this->items[$key];
+    }
+
+    public function containsKey(string $key): bool
+    {
+        return isset($this->items[$key]);
+    }
+
+    public function search($value): string
+    {
+        foreach ($this->items as $key => $item) {
+            if ($this->theseAreEqual($item, $value)) {
+                return $key;
+            }
+        }
+
+        throw OutOfRangeException::valueOutOfRange($value);
+    }
+
     public function add(string $key, $value): self
     {
         if ($this->containsKey($key)) {
@@ -47,41 +72,6 @@ final class Map extends Collection
         $items = $this->items;
 
         $items[$key] = $value;
-
-        return new self($items);
-    }
-
-    public function remove($value): self
-    {
-        $items = $this->items;
-        $key   = $this->search($value);
-
-        unset($items[$key]);
-
-        return new self($items);
-    }
-
-    public function removeAll($value): self
-    {
-        $items = $this->items;
-        $keys  = $this->searchAll($value);
-
-        foreach ($keys as $key) {
-            unset($items[$key]);
-        }
-
-        return new self($items);
-    }
-
-    public function removeKey(string $key): self
-    {
-        if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
-        }
-
-        $items = $this->items;
-
-        unset($items[$key]);
 
         return new self($items);
     }
@@ -121,29 +111,39 @@ final class Map extends Collection
         return new self($items);
     }
 
-    public function get(string $key)
+    public function remove($value): self
+    {
+        $items = $this->items;
+        $key   = $this->search($value);
+
+        unset($items[$key]);
+
+        return new self($items);
+    }
+
+    public function removeAll($value): self
+    {
+        $items = $this->items;
+        $keys  = $this->searchAll($value);
+
+        foreach ($keys as $key) {
+            unset($items[$key]);
+        }
+
+        return new self($items);
+    }
+
+    public function removeKey(string $key): self
     {
         if (!$this->containsKey($key)) {
             throw OutOfRangeException::keyOutOfRange($key);
         }
 
-        return $this->items[$key];
-    }
+        $items = $this->items;
 
-    public function search($value): string
-    {
-        foreach ($this->items as $key => $item) {
-            if ($this->theseAreEqual($item, $value)) {
-                return $key;
-            }
-        }
+        unset($items[$key]);
 
-        throw OutOfRangeException::valueOutOfRange($value);
-    }
-
-    public function containsKey(string $key): bool
-    {
-        return isset($this->items[$key]);
+        return new self($items);
     }
 
     public function intersect(self $other): self
