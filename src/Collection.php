@@ -76,6 +76,11 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return new Vector($foundPointers);
     }
 
+    public function toArray(): array
+    {
+        return $this->items;
+    }
+
     /**
      * The reducer callable is given the carry value and an item,
      * and should return the value it is reduced to.

@@ -672,6 +672,23 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_an_array_with_all_its_items()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $map           = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz]);
+        $expectedArray = ['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz];
+
+        $newArray = $map->toArray();
+
+        $this->assertSame($expectedArray, $newArray);
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_a_new_map_with_an_equatable_item_added()
     {
         $itemFoo = new EquatableObject('foo');

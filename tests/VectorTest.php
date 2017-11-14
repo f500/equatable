@@ -598,6 +598,23 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_an_array_with_all_its_items()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $vector        = new Vector([$itemFoo, $itemBar, $itemBaz]);
+        $expectedArray = [$itemFoo, $itemBar, $itemBaz];
+
+        $newArray = $vector->toArray();
+
+        $this->assertSame($expectedArray, $newArray);
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_a_new_vector_with_an_equatable_item_added()
     {
         $itemFoo = new EquatableObject('foo');
