@@ -45,7 +45,7 @@ final class Map extends Collection
     public function get(string $key)
     {
         if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
+            throw OutOfRangeException::doesNotContainKey($key);
         }
 
         return $this->items[$key];
@@ -64,7 +64,7 @@ final class Map extends Collection
             }
         }
 
-        throw OutOfRangeException::valueOutOfRange($value);
+        throw OutOfRangeException::doesNotContainValue($value);
     }
 
     public function equals($other): bool
@@ -146,7 +146,7 @@ final class Map extends Collection
     public function replaceKey(string $key, $replacementValue): self
     {
         if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
+            throw OutOfRangeException::doesNotContainKey($key);
         }
 
         $items = $this->items;
@@ -185,7 +185,7 @@ final class Map extends Collection
     public function removeKey(string $key): self
     {
         if (!$this->containsKey($key)) {
-            throw OutOfRangeException::keyOutOfRange($key);
+            throw OutOfRangeException::doesNotContainKey($key);
         }
 
         $items = $this->items;

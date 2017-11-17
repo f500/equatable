@@ -42,7 +42,7 @@ final class Vector extends Collection
     public function get(int $index)
     {
         if (!isset($this->items[$index])) {
-            throw OutOfRangeException::indexOutOfRange($index);
+            throw OutOfRangeException::doesNotContainIndex($index);
         }
 
         return $this->items[$index];
@@ -56,7 +56,7 @@ final class Vector extends Collection
             }
         }
 
-        throw OutOfRangeException::valueOutOfRange($value);
+        throw OutOfRangeException::doesNotContainValue($value);
     }
 
     public function equals($other): bool

@@ -23,9 +23,9 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_indexOutOfRange_exception()
+    public function it_creates_a_doesNotContainIndex_exception()
     {
-        $exception = OutOfRangeException::indexOutOfRange(0);
+        $exception = OutOfRangeException::doesNotContainIndex(0);
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertSame(
@@ -37,9 +37,9 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_keyOutOfRange_exception()
+    public function it_creates_a_doesNotContainKey_exception()
     {
-        $exception = OutOfRangeException::keyOutOfRange('a');
+        $exception = OutOfRangeException::doesNotContainKey('a');
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertSame(
@@ -51,9 +51,37 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_valueOutOfRange_exception_mentioning_the_type_and_hash_of_an_object()
+    public function it_creates_a_doesNotContainValue_exception_mentioning_an_integer()
     {
-        $exception = OutOfRangeException::valueOutOfRange(new EquatableObject('Some value'));
+        $exception = OutOfRangeException::doesNotContainValue(123);
+
+        $this->assertInstanceOf(OutOfRangeException::class, $exception);
+        $this->assertSame(
+            'Collection does not contain the value integer(123)',
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_doesNotContainValue_exception_mentioning_a_string()
+    {
+        $exception = OutOfRangeException::doesNotContainValue('Some value');
+
+        $this->assertInstanceOf(OutOfRangeException::class, $exception);
+        $this->assertSame(
+            "Collection does not contain the value string('Some value')",
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_doesNotContainValue_exception_mentioning_an_object()
+    {
+        $exception = OutOfRangeException::doesNotContainValue(new EquatableObject('Some value'));
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertRegExp(
@@ -65,13 +93,13 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_valueOutOfRange_exception_mentioning_the_type_and_toString_result_of_an_object()
+    public function it_creates_a_doesNotContainValue_exception_mentioning_a_toString_object()
     {
-        $exception = OutOfRangeException::valueOutOfRange(new EquatableObjectWithToString('Some value'));
+        $exception = OutOfRangeException::doesNotContainValue(new EquatableObjectWithToString('Some value'));
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertSame(
-            'Collection does not contain the value F500\Equatable\Tests\Objects\EquatableObjectWithToString(Some value)',
+            "Collection does not contain the value F500\\Equatable\\Tests\\Objects\\EquatableObjectWithToString('Some value')",
             $exception->getMessage()
         );
     }
@@ -79,13 +107,27 @@ final class OutOfRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_valueOutOfRange_exception_mentioning_the_type_and_magic_toString_result_of_an_object()
+    public function it_creates_a_doesNotContainValue_exception_mentioning_a_magic_toString_object()
     {
-        $exception = OutOfRangeException::valueOutOfRange(new EquatableObjectWithMagicToString('Some value'));
+        $exception = OutOfRangeException::doesNotContainValue(new EquatableObjectWithMagicToString('Some value'));
 
         $this->assertInstanceOf(OutOfRangeException::class, $exception);
         $this->assertSame(
-            'Collection does not contain the value F500\Equatable\Tests\Objects\EquatableObjectWithMagicToString(Some value)',
+            "Collection does not contain the value F500\\Equatable\\Tests\\Objects\\EquatableObjectWithMagicToString('Some value')",
+            $exception->getMessage()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_doesNotContainAnything_exception()
+    {
+        $exception = OutOfRangeException::doesNotContainAnything();
+
+        $this->assertInstanceOf(OutOfRangeException::class, $exception);
+        $this->assertSame(
+            'Collection does not contain anything',
             $exception->getMessage()
         );
     }
