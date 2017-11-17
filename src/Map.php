@@ -107,7 +107,7 @@ final class Map extends Collection
     public function add(string $key, $value): self
     {
         if ($this->containsKey($key)) {
-            throw InRangeException::keyInRange($key);
+            throw InRangeException::alreadyContainsKey($key);
         }
 
         $items = $this->items;

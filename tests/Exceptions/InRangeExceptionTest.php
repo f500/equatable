@@ -20,9 +20,9 @@ final class InRangeExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_keyInRange_exception()
+    public function it_creates_an_alreadyContainsKey_exception()
     {
-        $exception = InRangeException::keyInRange('a');
+        $exception = InRangeException::alreadyContainsKey('a');
 
         $this->assertInstanceOf(InRangeException::class, $exception);
         $this->assertSame(

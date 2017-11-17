@@ -16,7 +16,7 @@ use OutOfRangeException as BaseException;
  */
 final class InRangeException extends BaseException
 {
-    public static function keyInRange(string $key): self
+    public static function alreadyContainsKey(string $key): self
     {
         return new self(sprintf('Collection already contains the key "%s"', $key));
     }
