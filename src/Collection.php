@@ -81,6 +81,15 @@ abstract class Collection implements Equatable, Countable, IteratorAggregate
         return $this->items;
     }
 
+    public function first()
+    {
+        if ($this->isEmpty()) {
+            throw OutOfRangeException::doesNotContainAnything();
+        }
+
+        return reset($this->items);
+    }
+
     /**
      * The reducer callable is given the carry value and an item,
      * and should return the value it is reduced to.
