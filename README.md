@@ -12,8 +12,8 @@ This library provides an interface for this.
 
 We hit secondary problems when we try to work with these objects, especially when dealing with arrays of them.
 Functions like `in_array()` and `array_search()` don't use our specialized `equals()` method, so they in turn yield incorrect results.
-To overcome these problems, this library provides interfaces for a map (ordered dictionary-style collection) and a vector (stack-like collection),
-as well as concrete immutable implementations designed to contain equatable objects.
+To overcome these problems, this library provides a map (ordered dictionary-style collection) and a vector (stack-like collection).
+These are immutable and final, meant to replace normal arrays.
 
 Authored by [Jasper N. Brouwer][jaspernbrouwer].
 
