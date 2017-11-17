@@ -41,7 +41,7 @@ final class Vector extends Collection
 
     public function get(int $index)
     {
-        if (!isset($this->items[$index])) {
+        if (!$this->containsIndex($index)) {
             throw OutOfRangeException::doesNotContainIndex($index);
         }
 
@@ -193,5 +193,10 @@ final class Vector extends Collection
         $items = array_map($mapper, $this->items);
 
         return new self($items);
+    }
+
+    private function containsIndex(int $index): bool
+    {
+        return isset($this->items[$index]);
     }
 }
