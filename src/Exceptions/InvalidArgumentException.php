@@ -26,7 +26,7 @@ final class InvalidArgumentException extends BaseException
         );
     }
 
-    public static function invalidValueTypeInArray(string $argument, string $expectedType, $actualValue): self
+    public static function invalidValueInArray(string $argument, string $expectedType, $actualValue): self
     {
         return self::create(
             'Each value in argument $%s must be of type %s, %s given',
@@ -36,7 +36,7 @@ final class InvalidArgumentException extends BaseException
         );
     }
 
-    public static function invalidKeyTypeInArray(string $argument, string $expectedType, $actualValue): self
+    public static function invalidKeyInArray(string $argument, string $expectedType, $actualValue): self
     {
         return self::create(
             'Each key in argument $%s must be of type %s, %s given',

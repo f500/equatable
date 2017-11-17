@@ -280,7 +280,7 @@ final class Map extends Collection
     private function guardAgainstInvalidKey($key)
     {
         if (!is_string($key)) {
-            throw InvalidArgumentException::invalidKeyTypeInArray('values', 'string', $key);
+            throw InvalidArgumentException::invalidKeyInArray('values', 'string', $key);
         }
     }
 }

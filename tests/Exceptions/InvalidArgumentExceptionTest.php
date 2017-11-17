@@ -67,9 +67,9 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidValueTypeInArray_exception_mentioning_the_type_of_a_scalar_value()
+    public function it_creates_an_invalidValueInArray_exception_mentioning_the_type_of_a_scalar_value()
     {
-        $exception = InvalidArgumentException::invalidValueTypeInArray('someArgument', 'string', true);
+        $exception = InvalidArgumentException::invalidValueInArray('someArgument', 'string', true);
 
         $this->assertInstanceOf(InvalidArgumentException::class, $exception);
         $this->assertSame(
@@ -81,9 +81,9 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidValueTypeInArray_exception_mentioning_the_type_of_an_object()
+    public function it_creates_an_invalidValueInArray_exception_mentioning_the_type_of_an_object()
     {
-        $exception = InvalidArgumentException::invalidValueTypeInArray('someArgument', 'string', new stdClass());
+        $exception = InvalidArgumentException::invalidValueInArray('someArgument', 'string', new stdClass());
 
         $this->assertInstanceOf(InvalidArgumentException::class, $exception);
         $this->assertSame(
@@ -95,11 +95,11 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidValueTypeInArray_exception_mentioning_the_type_of_a_resource()
+    public function it_creates_an_invalidValueInArray_exception_mentioning_the_type_of_a_resource()
     {
         $fp = fopen('php://stdout', 'w');
 
-        $exception = InvalidArgumentException::invalidValueTypeInArray('someArgument', 'string', $fp);
+        $exception = InvalidArgumentException::invalidValueInArray('someArgument', 'string', $fp);
 
         fclose($fp);
 
@@ -113,9 +113,9 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidKeyTypeInArray_exception_mentioning_the_type_of_a_scalar_value()
+    public function it_creates_an_invalidKeyInArray_exception_mentioning_the_type_of_a_scalar_value()
     {
-        $exception = InvalidArgumentException::invalidKeyTypeInArray('someArgument', 'string', true);
+        $exception = InvalidArgumentException::invalidKeyInArray('someArgument', 'string', true);
 
         $this->assertInstanceOf(InvalidArgumentException::class, $exception);
         $this->assertSame(
@@ -127,9 +127,9 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidKeyTypeInArray_exception_mentioning_the_type_of_an_object()
+    public function it_creates_an_invalidKeyInArray_exception_mentioning_the_type_of_an_object()
     {
-        $exception = InvalidArgumentException::invalidKeyTypeInArray('someArgument', 'string', new stdClass());
+        $exception = InvalidArgumentException::invalidKeyInArray('someArgument', 'string', new stdClass());
 
         $this->assertInstanceOf(InvalidArgumentException::class, $exception);
         $this->assertSame(
@@ -141,11 +141,11 @@ final class InvalidArgumentExceptionTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_an_invalidKeyTypeInArray_exception_mentioning_the_type_of_a_resource()
+    public function it_creates_an_invalidKeyInArray_exception_mentioning_the_type_of_a_resource()
     {
         $fp = fopen('php://stdout', 'w');
 
-        $exception = InvalidArgumentException::invalidKeyTypeInArray('someArgument', 'string', $fp);
+        $exception = InvalidArgumentException::invalidKeyInArray('someArgument', 'string', $fp);
 
         fclose($fp);
 
