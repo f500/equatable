@@ -1234,6 +1234,64 @@ final class MapTest extends TestCase
     /**
      * @test
      */
+    public function it_merges_another_map()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map1 = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map2 = new Map(['baz' => $itemBaz, 'qux' => $itemQux]);
+
+        $newMap = $map1->merge($map2);
+
+        $expectedMap = new Map(['foo' => $itemFoo, 'bar' => $itemBar, 'baz' => $itemBaz, 'qux' => $itemQux]);
+        $this->assertTrue($expectedMap->equals($newMap));
+    }
+
+    /**
+     * @test
+     */
+    public function it_overrides_values_with_merged_values_at_the_same_key()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map1 = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map2 = new Map(['bar' => $itemBaz, 'qux' => $itemQux]);
+
+        $newMap = $map1->merge($map2);
+
+        $expectedMap = new Map(['foo' => $itemFoo, 'bar' => $itemBaz, 'qux' => $itemQux]);
+        $this->assertTrue($expectedMap->equals($newMap));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_merging()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $map1 = new Map(['foo' => $itemFoo, 'bar' => $itemBar]);
+        $map2 = new Map(['baz' => $itemBaz, 'qux' => $itemQux]);
+
+        $map1->merge($map2);
+
+        $this->assertCount(2, $map1);
+        $this->assertSame($itemFoo, $map1->get('foo'));
+        $this->assertSame($itemBar, $map1->get('bar'));
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_all_equatable_items_in_this_map_that_are_also_present_in_the_other_map()
     {
         $itemFoo  = new EquatableObject('foo');

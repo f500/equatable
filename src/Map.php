@@ -195,6 +195,13 @@ final class Map extends Collection
         return new self($items);
     }
 
+    public function merge(self $other): self
+    {
+        $items = array_merge($this->items, $other->items);
+
+        return new self($items);
+    }
+
     public function intersect(self $other): self
     {
         $items = [];

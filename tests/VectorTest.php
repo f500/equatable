@@ -1037,6 +1037,45 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
+    public function it_merges_another_map()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $vector1 = new Vector([$itemFoo, $itemBar]);
+        $vector2 = new Vector([$itemBaz, $itemQux]);
+
+        $newVector = $vector1->merge($vector2);
+
+        $expectedVector = new Vector([$itemFoo, $itemBar, $itemBaz, $itemQux]);
+        $this->assertTrue($expectedVector->equals($newVector));
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_unchanged_after_merging()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+        $itemQux = new EquatableObject('qux');
+
+        $vector1 = new Vector([$itemFoo, $itemBar]);
+        $vector2 = new Vector([$itemBaz, $itemQux]);
+
+        $vector1->merge($vector2);
+
+        $this->assertCount(2, $vector1);
+        $this->assertSame($itemFoo, $vector1->get(0));
+        $this->assertSame($itemBar, $vector1->get(1));
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_all_equatable_items_in_this_vector_that_are_also_present_in_the_other_vector()
     {
         $itemFoo  = new EquatableObject('foo');
