@@ -642,6 +642,33 @@ final class VectorTest extends TestCase
     /**
      * @test
      */
+    public function it_exposes_its_last_item()
+    {
+        $itemFoo = new EquatableObject('foo');
+        $itemBar = new EquatableObject('bar');
+        $itemBaz = new EquatableObject('baz');
+
+        $vector = new Vector([$itemFoo, $itemBar, $itemBaz]);
+
+        $last = $vector->last();
+
+        $this->assertSame($itemBaz, $last);
+    }
+
+    /**
+     * @test
+     * @expectedException \F500\Equatable\Exceptions\OutOfRangeException
+     */
+    public function it_cannot_exposes_its_last_item_when_it_is_empty()
+    {
+        $vector = new Vector();
+
+        $vector->last();
+    }
+
+    /**
+     * @test
+     */
     public function it_exposes_a_new_vector_with_an_equatable_item_added()
     {
         $itemFoo = new EquatableObject('foo');
