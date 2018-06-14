@@ -20,9 +20,24 @@ use PHPUnit\Framework\Constraint\TraversableContains;
 final class EquatableCollectionContains extends TraversableContains
 {
     /**
+     * @var mixed
+     */
+    private $value;
+
+    /**
      * @inheritdoc
      */
-    protected function matches($other)
+    public function __construct($value, bool $checkForObjectIdentity = true, bool $checkForNonObjectIdentity = false)
+    {
+        parent::__construct($value, $checkForObjectIdentity, $checkForNonObjectIdentity);
+
+        $this->value = $value;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function matches($other): bool
     {
         if ($other instanceof Map || $other instanceof Vector) {
             return $other->contains($this->value);
@@ -38,7 +53,7 @@ final class EquatableCollectionContains extends TraversableContains
     /**
      * @inheritdoc
      */
-    protected function failureDescription($other)
+    protected function failureDescription($other): string
     {
         if ($other instanceof Map) {
             return 'an equatable map ' . $this->toString();
